@@ -4,7 +4,8 @@ require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
-Bundler.require(*Rails.groups)
+# ygurevich: 10/7/2014: added :default to the bundler require to match what was in postit_nas
+Bundler.require(:default, *Rails.groups)
 
 module PtaDirectory
   class Application < Rails::Application
@@ -19,5 +20,8 @@ module PtaDirectory
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
+
+    # Tealeaf note: Bootstrap sass gem addition
+    config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
   end
 end

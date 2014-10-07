@@ -1,0 +1,23 @@
+<% allow_add_student_var ||= "" %>
+<% warn_on_empty_var ||= "" %>
+<% family_var ||= nil %>
+
+<div class="well">
+  <% if student_list_var.size > 0 %>
+    <% student_list_var.each do |s| %>
+      <p><%= "#{s.firstname} (#{s.nickname}) #{s.lastname}" %></p>
+    <% end %>
+  <% else %>
+    <% if warn_on_empty_var == "warn" %>
+      <p>
+        No student information has been created yet.
+        Would you like to add students to this family?
+      </p>
+    <% end %>
+  <% end %>
+
+  <% if allow_add_student_var && family_var %>
+    <%= link_to '<i class="icon-plus"></i>Add Student'.html_safe, new_family_student_path(family_var), class: "btn btn-small" %>
+  <% end %>
+
+</div>

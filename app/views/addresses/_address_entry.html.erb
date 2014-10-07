@@ -1,0 +1,27 @@
+<div style="margin-left: 40px;">
+  <table class="well table table-condensed">
+    <tr>
+      <td><em>Street Address</em></td>
+      <td><%= address_var.address_line1 %></td>
+      <% if address_var.address_line2 %>
+        <td></td>
+        <td><%= address_var.address_line2 %></td>
+      <% end %>
+    </tr>
+
+    <tr>
+      <td>City</td>
+      <td><%= address_var.city %></td>
+    </tr>
+
+    <tr>
+      <td>State</td>
+      <td><%= address_var.state %></td>
+    </tr>
+
+    <tr>
+      <td>Zip</td>
+      <td><%= address_var.zipcode %></td>
+    </tr>
+  </table>    
+</div>

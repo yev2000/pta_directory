@@ -1,0 +1,43 @@
+<!-- we show a block of information about the family -->
+
+<% details_var ||= "none" %>
+
+<div class="well">
+  <h4><%= family_var.name %></h4>
+
+  <% if details_var != "details" %>
+    <%= link_to family_path(family_var) do %>
+      <i class="icon-book"></i>&nbsp;&nbsp;Details
+    <% end %>
+  <% else %>
+    <h5>Parents</h5>
+
+    <div style="margin-left: 40px;">
+      <%= render "parents/parents_list",
+          {
+            parent_list_var: family_var.parents,
+            allow_add_parent_var: "allow",
+            warn_on_empty_var: "warn",
+            family_var: family_var
+          } %>
+    </div>
+
+    <h5>Students</h5>
+
+    <div style="margin-left: 40px;">
+      <%= render "students/students_list",
+          {
+            student_list_var: family_var.students,
+            allow_add_student_var: "allow",
+            warn_on_empty_var: "warn",
+            family_var: family_var
+          } %>
+    </div>
+
+    <% if family_var.address %>
+      <h5>Address</h5>
+      <%= render "addresses/address_entry", {address_var: family_var.address} %>
+    <% end %>
+
+  <% end %>
+</div>

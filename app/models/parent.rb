@@ -4,11 +4,11 @@ class Parent < ActiveRecord::Base
   belongs_to  :family
   has_many    :students, through: :family
 
-  validates :firstname, presence: true
-  validates :lastname, presence: true
+  validates :firstname, presence: true, length: {minimum: 1}
+  validates :lastname, presence: true, length: {minimum: 1}
+  
+  def name_string
+    firstname + " " + lastname
+  end
   
 end
-
-
-
-

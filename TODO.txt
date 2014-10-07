@@ -1,0 +1,29 @@
+* create basic family listing view and family show view
+    with ability to drill down to see parents and students
+    DONE
+
+* Add ability to create Parent and Students as children of family
+
+* Add assets related to bootstrap based on sample postit project.
+* flesh out contacts and tie in contacts to parents
+* flesh out address and tie in to parents
+* create "class" model
+* relate students to class
+* create teacher model
+* relate teacher to class
+
+* design how user accounts/logins relate to models
+* is a user associated with a parent?  a teacher?
+    concept of primary "owner" of an account?
+    each family has an "administrator" who can change settings for that family.  And delegate administrator ability to others(?)
+    
+* implement restriction that contact info is only visible to users who have children in common with parents/teachers in the class.  So if you are user X and you have a child in classes A and B then you can only see contact info for parents with students also in classes A and B...
+
+* various search screens to implement:
+  Search for teacher
+  Search for student
+  Search for family
+  Search for parent
+
+
+http://www.tutorialrepublic.com/twitter-bootstrap-2.3.2-tutorial/bootstrap-icons.php

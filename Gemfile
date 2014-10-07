@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+# ygurevich: 10/7/2014: used to be rails 4.1.5
+# ygurevich: 10/7/2014: reverted to rails 4.1.5 from 4.0.0 because configure did not work?
 gem 'rails', '4.1.5'
 # Use sqlite3 as the database for Active Record
 

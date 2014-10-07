@@ -1,0 +1,24 @@
+<%= render "shared/content_title", {title_var: title_var} %>
+
+<% create_button_string = @parent.new_record? ? "Create Parent Record" : "Update Parent Record" %>
+
+<%= render "shared/errors_display", errors_set: @parent.errors %>
+
+<div class="well">
+
+  <%= form_for [@parent.family, @parent] do |f| %>
+    <div class="control-group">
+      <%= f.label :firstname %>
+      <%= f.text_field :firstname %>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :lastname %>
+      <%= f.text_field :lastname %>
+    </div>
+
+    <br/>
+    <%= f.submit create_button_string, class: "btn btn-primary" %>
+  <% end %>
+
+</div>

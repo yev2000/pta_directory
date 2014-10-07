@@ -1,0 +1,23 @@
+<% allow_add_parent_var ||= "" %>
+<% warn_on_empty_var ||= "" %>
+<% family_var ||= nil %>
+
+<div class="well">
+  <% if parent_list_var.size > 0 %>
+    <% parent_list_var.each do |p| %>
+      <%= render "parents/parent_entry", parent_var: p %>
+    <% end %>  <!-- parent iteration --> 
+  <% else %>
+    <% if warn_on_empty_var == "warn" %>
+      <p>
+        No parent information has been created yet.
+        Would you like to add parents to this family?  
+      </p>
+    <% end %>
+  <% end %>
+
+  <% if allow_add_parent_var && family_var %>
+    <%= link_to '<i class="icon-plus"></i>Add Parent'.html_safe, new_family_parent_path(family_var), class: "btn btn-small" %>
+  <% end %>
+
+</div>

@@ -1,0 +1,24 @@
+div.well {
+  background-color: #FFFFCC;
+  padding: 9px;
+  border: 1px solid #CC9999;
+  box-shadow: 2px 2px 8px #666666;
+}
+
+body {
+  font-family: "Titillium Web", "Calibri", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  background-color: #FFCCCC;
+}
+
+div.positive_vote_box {
+  background-color: #CCFF99;
+}
+
+div.negative_vote_box {
+  background-color: #FF99FF;
+}
+
+div.neutral_vote_box {
+  background-color: #E6E6FA;
+}

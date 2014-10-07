@@ -13,3 +13,41 @@
  *= require_tree .
  *= require_self
  */
+
+ @import "bootstrap";
+
+ .container {
+  margin-left: 135px
+}
+
+.navbar .nav > li > a.brand {
+  padding-left: 0px;
+}
+
+.quiet {
+  color: #ababab;
+}
+
+div.nav_item {
+  margin-left: 25px;
+  float: left;
+}
+
+.label, .badge  {
+  a, a:hover, a:focus {
+    color: #fff;
+    text-decoration: none;
+  }
+}
+
+div.yev_popup_style {
+  height: 50px;
+  width: 200px;
+  text-align: center;
+  vertical-align:middle;
+  background-color: cornflowerblue;
+  color: white;
+  display: none;
+  padding-top: 8px;
+  position: absolute;
+}

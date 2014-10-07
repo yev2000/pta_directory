@@ -1,0 +1,24 @@
+<p><b><%= parent_var.firstname + " " + parent_var.lastname %></b></p>
+
+<% if parent_var.contacts.size > 0 %>
+  <div style="margin-left: 40px;">
+    <table class="well table table-condensed">
+      <% parent_var.contacts.each do |contact| %>
+        <tr>
+          <th>Contact Type</th>
+          <th>Info</th>
+        </tr>
+        <tr>
+          <td><%= contact.contact_type %></td>
+          <td><%= contact.contact_data %></td>
+        </tr>
+      <% end %> <!-- contacts iteration -->
+    </table>
+  </div>
+<% end %> <!-- any contacts exist for the person -->
+
+<!-- display address info -->
+<% if parent_var.address %>
+<!-- TODO: handle case when parent has their own address -->
+<% end %>
+
