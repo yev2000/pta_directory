@@ -1,37 +1,33 @@
 <%= render "shared/content_title", {title_var: title_var} %>
 
-<% create_button_string = @student.new_record? ? "Create Student Record" : "Update Student Record" %>
+<% create_button_string = @teacher.new_record? ? "Create Teacher Record" : "Update Teacher Record" %>
 
-<%= render "shared/errors_display", errors_set: @student.errors %>
+<%= render "shared/errors_display", errors_set: @teacher.errors %>
 
 <div class="well">
 
-  <%= form_for [@student.family, @student] do |f| %>
+  <%= form_for @teacher do |f| %>
     <div class="control-group">
       <%= f.label :firstname %>
       <%= f.text_field :firstname %>
     </div>
-
-    <div class="control-group">
-      <%= f.label :nickname %>
-      <%= f.text_field :nickname %>
-    </div>
-
+    
     <div class="control-group">
       <%= f.label :lastname %>
       <%= f.text_field :lastname %>
     </div>
 
     <div class="control-group">
-      <%= f.label :schoolclass_ids, "Classes Attended" %>
+      <%= f.label :schoolclass_ids, "Classes Taught" %>
       <%= f.collection_select(:schoolclass_ids, Schoolclass.all, :id, :name,
           {
-            selected: @student.schoolclasses.map(&:id)
+            selected: @teacher.schoolclasses.map(&:id)
           },
           {
             multiple: true
           }) %>
     </div>
+
     <br/>
     <%= f.submit create_button_string, class: "btn btn-primary" %>
   <% end %>

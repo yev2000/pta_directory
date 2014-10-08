@@ -34,12 +34,22 @@ class StudentsController < ApplicationController
   end
 
   def update
+    ### note what i tried to do but that I ended up not needing
+
+    # http://stackoverflow.com/questions/8929230/why-is-the-first-element-always-blank-in-my-rails-multi-select-using-an-embedde
+    # we want to delete the empty array entry
+    #if (params[:student] && params[:student][:schoolclasses])
+    #  params[:student][:schoolclasses].delete_if{|x| x.empty? }
+    #  ##params[:student][:schoolclasses].map!{|x| Schoolclass.find_by(id: x.to_i)}
+    #end
+
     if @student.update(student_params)
       flash[:notice] = "The Student \"#{@student.first_last}\" was updated."
       redirect_to student_path(@student)
     else
       render :edit
     end
+
   end
 
   def show
@@ -48,7 +58,7 @@ class StudentsController < ApplicationController
   private
 
   def student_params
-    params.require(:student).permit(:firstname, :lastname, :nickname)
+    params.require(:student).permit(:firstname, :lastname, :nickname, schoolclass_ids: [])
   end
 
   def set_student

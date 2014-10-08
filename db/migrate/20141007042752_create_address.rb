@@ -6,7 +6,7 @@ class CreateAddress < ActiveRecord::Migration
       t.string      :city
       t.string      :state
       t.integer     :zipcode
-      t.string      :addressable_type # like parent or family
+      t.string      :addressable_type #  like parent or family
       t.integer     :addressable_id   #  parent or family ID
       t.timestamps
     end

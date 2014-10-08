@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   resources :parents, except: [:destroy, :new, :create] do
     resources :addresses, only: [:new, :create]
     resources :contacts, only: [:new, :create]
-    
+
     collection do
       get "search"
     end
@@ -34,6 +34,18 @@ Rails.application.routes.draw do
       get "search"
     end
   end
+
+  resources :schoolclasses, except: [:destroy] do
+    member do
+      get "add_teacher"
+      get "add_student"
+      post "set_teachers"
+      post "set_students"
+    end
+  end
+
+  resources :teachers, except: [:destroy]
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

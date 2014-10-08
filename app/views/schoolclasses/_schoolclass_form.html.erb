@@ -1,0 +1,19 @@
+<%= render "shared/content_title", {title_var: title_var} %>
+
+<% create_button_string = @schoolclass.new_record? ? "Create Class Record" : "Update Class Record" %>
+
+<%= render "shared/errors_display", errors_set: @schoolclass.errors %>
+
+<div class="well">
+
+  <%= form_for @schoolclass do |f| %>
+    <div class="control-group">
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+    </div>
+
+    <br/>
+    <%= f.submit create_button_string, class: "btn btn-primary" %>
+  <% end %>
+
+</div>

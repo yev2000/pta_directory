@@ -2,11 +2,15 @@ class Student < ActiveRecord::Base
   has_many    :contacts, as: :contactable
   belongs_to  :family
   has_many    :parents, through: :family
+  has_many    :schoolclass_students
+  has_many    :schoolclasses, through: :schoolclass_students
+  has_many    :teachers, -> { uniq }, through: :schoolclasses
 
   validates :firstname, presence: true
   validates :lastname, presence: true
   validates :family, presence: true
 
+  ### candidate to move to module
   def first_last
     firstname + (nickname && (nickname.size > 0) ? " (#{nickname}) " : " ") + lastname
   end

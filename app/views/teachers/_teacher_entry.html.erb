@@ -1,0 +1,43 @@
+<% compact_var ||= "" %>
+
+<% name_method ||= :first_last %>
+
+<p>
+  <b><%= teacher_var.send(name_method) %></b>
+  <% if compact_var == "compact" %>
+    <% if teacher_var.schoolclasses.size > 0 %>
+      <small><em style="margin-left: 20px;"><%= "Teaching #{teacher_var.schoolclasses.size} #{'class'.pluralize(teacher_var.schoolclasses.size)}" %></em></small>
+    <% end %>
+  <% end %>
+
+  <% if compact_var == "compact" %>  
+    <%= link_to '<span class="pull-right" style="margin-right: 5px; font-size:11px;"><i class="icon-user"></i> Details</span>'.html_safe, teacher_path(teacher_var), style: "margin-left: 20px;" %>
+    <%= link_to '<span class="pull-right" style="margin-right: 5px; font-size:11px;"><i class="icon-user"></i> Edit</span>'.html_safe, edit_teacher_path(teacher_var), style: "margin-left: 5px;" %>
+  <% end %>
+</p>
+
+<% if compact_var != "compact" %>
+  <% if teacher_var.schoolclasses.size > 0 %>
+    <div style="margin-left: 40px;">
+      <h5>Classes</h5>
+      <%= render "schoolclasses/schoolclass_list",
+      {
+        schoolclass_list_var: teacher_var.schoolclasses,
+        allow_add_schoolclass_var: "",
+        warn_on_empty_var: "",
+      } %>
+    </div>
+  <% end %>
+
+  <% if teacher_var.students.size > 0 %>
+    <div style="margin-left: 40px;">
+      <h5>Students</h5>
+      <%= render "students/students_list",
+      {
+        student_list_var: teacher_var.students,
+        name_method: :last_first,
+        compact_var: "compact"
+      } %>
+    </div>
+  <% end %>
+<% end %>

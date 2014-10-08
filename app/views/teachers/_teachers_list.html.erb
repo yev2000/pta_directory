@@ -1,0 +1,25 @@
+<% name_method ||= :first_last %>
+<% allow_add_var ||= "" %>
+
+<div class="well">
+  <% if teacher_list_var.size > 0 %>
+    <% teacher_list_var.each do |t| %>
+      <%= render "teachers/teacher_entry", 
+        {
+          teacher_var: t,
+          name_method: name_method,
+          compact_var: "compact"
+        } %>
+    <% end %>
+  <% else %>
+    <p>
+      No teacher information has been created yet.
+      Would you like to add a teacher?
+    </p>
+  <% end %>  
+  
+  <% if allow_add_var == "allow" %>
+    <%= link_to '<i class="icon-plus"></i>Add Teacher'.html_safe, new_teacher_path, class: "btn btn-small" %>
+  <% end %>
+  
+</div>

@@ -4,13 +4,18 @@
 
 <p>
   <b><%= student_var.send(name_method) %></b>
+  <% if compact_var == "compact" %>
+    <% if student_var.schoolclasses.size > 0 %>
+      <small><em style="margin-left: 20px;"><%= "Enrolled in #{student_var.schoolclasses.size} #{'class'.pluralize(student_var.schoolclasses.size)}" %></em></small>
+    <% end %>
+  <% end %>
   <% if family_var.nil? %>
     <!-- family_var being nil means that we are not listing the student in the -->
     <!-- context of a family listing and therefore OK to show more editing controls -->
-    <%= link_to '<i class="icon-pencil"></i> Edit'.html_safe, edit_student_path(student_var), style: "margin-left: 20px;" %>
-    <%= link_to '<i class="icon-home"></i> Family'.html_safe, family_path(student_var.family), style: "margin-left: 5px;" %>
+    <%= link_to '<span class="pull-right"><i class="icon-pencil"></i> Edit</span>'.html_safe, edit_student_path(student_var), style: "margin-left: 20px; text-align: right;" %>
+    <%= link_to '<span class="pull-right"><i class="icon-home"></i> Family</span>'.html_safe, family_path(student_var.family), style: "margin-left: 5px;" %>
   <% else %>
-    <%= link_to '<i class="icon-user"></i> Details'.html_safe, student_path(student_var), style: "margin-left: 20px;" %>
+    <%= link_to '<span class="pull-right"><i class="icon-user"></i> Details</span>'.html_safe, student_path(student_var), style: "margin-left: 20px;" %>
   <% end %>
 </p>
 
@@ -41,5 +46,26 @@
     </div>
   <% end %>
 
+  <% if student_var.schoolclasses.size > 0 %>
+    <div style="margin-left: 40px;">
+      <h5>Classes</h5>
+      <%= render "schoolclasses/schoolclass_list",
+      {
+        schoolclass_list_var: student_var.schoolclasses,
+        compact_var: "compact"
+      } %>
+    </div>
+  <% end %>
+
+  <% if student_var.teachers.size > 0 %>
+    <div style="margin-left: 40px;">
+      <h5>Teachers</h5>
+      <%= render "teachers/teachers_list",
+      {
+        teacher_list_var: student_var.teachers,
+        compact_var: "compact"
+      } %>
+    </div>
+  <% end %>
 
 <% end %>

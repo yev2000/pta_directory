@@ -1,0 +1,26 @@
+<% allow_add_class_var ||= "" %>
+<% warn_on_empty_var ||= "" %>
+
+<div class="well">
+  <% if schoolclass_list_var.size > 0 %>
+    <% schoolclass_list_var.each do |sc| %>
+      <%= render "schoolclasses/schoolclass_entry", 
+        {
+          schoolclass_var: sc,
+          compact_var: "compact"
+        } %>
+    <% end %>
+  <% else %>
+    <% if warn_on_empty_var == "warn" %>
+      <p>
+        No class information has been created yet.
+        Would you like to add classes?
+      </p>
+    <% end %>
+  <% end %>  
+
+  <% if allow_add_class_var == "allow" %>
+    <%= link_to '<i class="icon-plus"></i>Add Class'.html_safe, new_schoolclass_path, class: "btn btn-small" %>
+  <% end %>
+
+</div>

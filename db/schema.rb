@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141007042752) do
+ActiveRecord::Schema.define(version: 20141008125943) do
 
   create_table "addresses", force: true do |t|
     t.string   "address_line1"
@@ -48,11 +48,38 @@ ActiveRecord::Schema.define(version: 20141007042752) do
     t.datetime "updated_at"
   end
 
+  create_table "schoolclass_students", force: true do |t|
+    t.integer  "student_id"
+    t.integer  "schoolclass_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "schoolclass_teachers", force: true do |t|
+    t.integer  "teacher_id"
+    t.integer  "schoolclass_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "schoolclasses", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "students", force: true do |t|
     t.string   "firstname"
     t.string   "lastname"
     t.string   "nickname"
     t.integer  "family_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "teachers", force: true do |t|
+    t.string   "firstname"
+    t.string   "lastname"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

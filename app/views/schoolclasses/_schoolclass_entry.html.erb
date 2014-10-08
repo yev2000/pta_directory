@@ -1,0 +1,47 @@
+<% compact_var ||= "" %>
+
+<p>
+  <b><%= schoolclass_var.name %></b>
+  <% if compact_var == "compact" %>
+    <small><em style="margin-left: 20px;"><%= "With #{schoolclass_var.teachers.size} #{'teacher'.pluralize(schoolclass_var.teachers.size)} and #{schoolclass_var.students.size} #{'student'.pluralize(schoolclass_var.students.size)}" %></em></small>
+  <% end %>
+
+  <% if compact_var == "compact" %>  
+    <%= link_to '<span class="pull-right"><i class="icon-user"></i> Details</span>'.html_safe, schoolclass_path(schoolclass_var), style: "margin-left: 20px;" %>
+  <% end %>
+
+</p>
+
+<% if compact_var != "compact" %>
+  <div style="margin-left: 40px;">
+    <h5><%= "Teacher".pluralize(schoolclass_var.teachers.size) %></h5>
+    <% if schoolclass_var.teachers.size > 0 %>
+      <%= render "teachers/teachers_list",
+      {
+        teacher_list_var: schoolclass_var.teachers,
+        compact_var: "compact"
+      } %>
+    <% else %>
+      <p>No teachers have been defined for this class.</p>
+    <% end %>
+    <% if compact_var != "compact" %>
+      <%= link_to '<i class="icon-plus"></i>Add Teacher'.html_safe, add_teacher_schoolclass_path(schoolclass_var), class: "btn btn-small" %>
+    <% end %>
+  </div>
+
+  <div style="margin-left: 40px;">
+    <h5><%= "Student".pluralize(schoolclass_var.students.size) %></h5>
+    <% if schoolclass_var.students.size > 0 %>
+      <%= render "students/students_list",
+      {
+        student_list_var: schoolclass_var.students,
+        compact_var: "compact"
+      } %>
+    <% else %>
+      <p>No students have been defined for this class.</p>
+    <% end %>
+    <% if compact_var != "compact" %>
+      <%= link_to '<i class="icon-plus"></i>Add Student'.html_safe, add_student_schoolclass_path(schoolclass_var), class: "btn btn-small" %>
+    <% end %>
+  </div>
+<% end %>
