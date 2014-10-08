@@ -7,8 +7,10 @@ Rails.application.routes.draw do
   get '/logout', to: 'sessions#destroy'
 
   resources :families, except: [:destroy] do
-    resources :parents, only: [:new, :create]
-    resources :students, only: [:new, :create]
+    resources :parents, only: [:new, :create, :edit, :update]
+    resources :students, only: [:new, :create, :edit, :update]
+    resources :contacts, only: [:new, :create]
+    resources :addresses, only: [:new, :create]
 
     collection do
       get "search"
@@ -16,10 +18,16 @@ Rails.application.routes.draw do
   end
 
   resources :parents, except: [:destroy, :new, :create] do
+    resources :addresses, only: [:new, :create]
+    resources :contacts, only: [:new, :create]
+    
     collection do
       get "search"
     end
   end
+
+  resources :contacts, only: [:edit, :update]
+  resources :addresses, only: [:edit, :update]
 
   resources :students, except: [:destroy, :new, :create] do
     collection do

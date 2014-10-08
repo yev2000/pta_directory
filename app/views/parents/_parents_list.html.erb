@@ -1,14 +1,16 @@
 <% allow_add_parent_var ||= "" %>
 <% warn_on_empty_var ||= "" %>
 <% family_var ||= nil %>
+<% compact_var ||= "" %>
+<% name_method ||= :first_last %>
 
 <div class="well">
   <% if parent_list_var.size > 0 %>
     <% parent_list_var.each do |p| %>
-      <%= render "parents/parent_entry", parent_var: p %>
+      <%= render "parents/parent_entry", {parent_var: p, family_var: family_var, compact_var: compact_var, name_method: name_method} %>
     <% end %>  <!-- parent iteration --> 
   <% else %>
-    <% if warn_on_empty_var == "warn" %>
+    <% if warn_on_empty_var == "warn" && family_var %>
       <p>
         No parent information has been created yet.
         Would you like to add parents to this family?  

@@ -1,0 +1,45 @@
+<% family_var ||= nil %>
+<% compact_var ||= "" %>
+<% name_method ||= :first_last %>
+
+<p>
+  <b><%= student_var.send(name_method) %></b>
+  <% if family_var.nil? %>
+    <!-- family_var being nil means that we are not listing the student in the -->
+    <!-- context of a family listing and therefore OK to show more editing controls -->
+    <%= link_to '<i class="icon-pencil"></i> Edit'.html_safe, edit_student_path(student_var), style: "margin-left: 20px;" %>
+    <%= link_to '<i class="icon-home"></i> Family'.html_safe, family_path(student_var.family), style: "margin-left: 5px;" %>
+  <% else %>
+    <%= link_to '<i class="icon-user"></i> Details'.html_safe, student_path(student_var), style: "margin-left: 20px;" %>
+  <% end %>
+</p>
+
+<% if compact_var != "compact" %>
+  <% if student_var.parents.size > 0 %>
+    <div style="margin-left: 40px;">
+      <h5>Parents</h5>
+      <%= render "parents/parents_list",
+      {
+        parent_list_var: student_var.parents,
+        allow_add_parent_var: "",
+        warn_on_empty_var: "",
+        family_var: family_var
+      } %>
+    </div>
+  <% end %>
+
+  <% if student_var.family_siblings && student_var.family_siblings.size > 0 %>
+    <div style="margin-left: 40px;">
+      <h5>Siblings</h5>
+      <%= render "students/students_list",
+      {
+        student_list_var: student_var.family_siblings,
+        name_method: :last_first,
+        family_var: nil,
+        compact_var: "compact"
+      } %>
+    </div>
+  <% end %>
+
+
+<% end %>

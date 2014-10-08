@@ -35,7 +35,7 @@
     </div>
 
     <% if family_var.address %>
-      <h5>Address</h5>
+      <h5>Family Address&nbsp;&nbsp;<small><%= link_to '<i class="icon-pencil"></i> Edit'.html_safe, edit_address_path(family_var.address) %></small></h5>
       <%= render "addresses/address_entry", {address_var: family_var.address} %>
     <% end %>
 

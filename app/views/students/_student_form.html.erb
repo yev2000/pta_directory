@@ -1,0 +1,29 @@
+<%= render "shared/content_title", {title_var: title_var} %>
+
+<% create_button_string = @student.new_record? ? "Create Student Record" : "Update Student Record" %>
+
+<%= render "shared/errors_display", errors_set: @student.errors %>
+
+<div class="well">
+
+  <%= form_for [@student.family, @student] do |f| %>
+    <div class="control-group">
+      <%= f.label :firstname %>
+      <%= f.text_field :firstname %>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :nickname %>
+      <%= f.text_field :nickname %>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :lastname %>
+      <%= f.text_field :lastname %>
+    </div>
+
+    <br/>
+    <%= f.submit create_button_string, class: "btn btn-primary" %>
+  <% end %>
+
+</div>

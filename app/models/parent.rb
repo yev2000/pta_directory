@@ -7,8 +7,12 @@ class Parent < ActiveRecord::Base
   validates :firstname, presence: true, length: {minimum: 1}
   validates :lastname, presence: true, length: {minimum: 1}
   
-  def name_string
+  def first_last
     firstname + " " + lastname
   end
-  
+
+  def last_first
+    lastname + ", " + firstname
+  end
+
 end

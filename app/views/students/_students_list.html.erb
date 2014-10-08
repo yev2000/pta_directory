@@ -1,11 +1,18 @@
 <% allow_add_student_var ||= "" %>
 <% warn_on_empty_var ||= "" %>
 <% family_var ||= nil %>
+<% name_method ||= :first_last %>
 
 <div class="well">
   <% if student_list_var.size > 0 %>
     <% student_list_var.each do |s| %>
-      <p><%= "#{s.firstname} (#{s.nickname}) #{s.lastname}" %></p>
+      <%= render "students/student_entry", 
+        {
+          student_var: s,
+          family_var: family_var,
+          name_method: name_method,
+          compact_var: "compact"
+        } %>
     <% end %>
   <% else %>
     <% if warn_on_empty_var == "warn" %>
@@ -14,7 +21,7 @@
         Would you like to add students to this family?
       </p>
     <% end %>
-  <% end %>
+  <% end %>  
 
   <% if allow_add_student_var && family_var %>
     <%= link_to '<i class="icon-plus"></i>Add Student'.html_safe, new_family_student_path(family_var), class: "btn btn-small" %>

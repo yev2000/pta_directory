@@ -3,7 +3,7 @@ class ParentsController < ApplicationController
   before_action :set_family_for_parent_creation, only: [:new, :create]
 
   def index
-    @parents = Parent.all
+    @parents = Parent.all.sort_by {|p| p.lastname}
   end
 
   def new
@@ -22,7 +22,7 @@ class ParentsController < ApplicationController
     ## @family.owner = current_user_get
 
     if @parent.save
-      flash[:notice] = "Parent #{@parent.name_string} was created"
+      flash[:notice] = "Parent #{@parent.first_last} was created"
       redirect_to parent_path(@parent)
     else
       render :new
@@ -35,7 +35,7 @@ class ParentsController < ApplicationController
 
   def update
     if @parent.update(parent_params)
-      flash[:notice] = "The parent \"#{@parent.name_string}\" was updated."
+      flash[:notice] = "The parent \"#{@parent.first_last}\" was updated."
       redirect_to parent_path(@parent)
     else
       render :edit
@@ -65,7 +65,7 @@ class ParentsController < ApplicationController
       begin      
         @family = Family.find(params[:family_id])
       rescue ActiveRecord::RecordNotFound
-        flash[:notice] = "There is no family with ID #{params[:id]}.  Cannot create a parent for an invalid Family Record."
+        flash[:notice] = "There is no family with ID #{params[:family_id]}.  Cannot create a parent for an invalid Family Record."
 
         ### figure out if this is the right place to redirect
         redirect_to families_path

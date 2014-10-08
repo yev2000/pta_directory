@@ -1,27 +1,37 @@
+<% size_var ||= "normal" %>
+
+<% if size_var == "small" %>
+  <% style_text = 'style="font-size: 10px; line-height: 11px;"'.html_safe %>
+<% else %>
+  <% style_text = '' %>
+<% end %>
+
 <div style="margin-left: 40px;">
   <table class="well table table-condensed">
-    <tr>
-      <td><em>Street Address</em></td>
-      <td><%= address_var.address_line1 %></td>
-      <% if address_var.address_line2 %>
-        <td></td>
-        <td><%= address_var.address_line2 %></td>
-      <% end %>
+    <tr <%= style_text %>>
+        <td <%= style_text %>><em>Street Address</em></td>
+        <td <%= style_text %>>
+          <%= address_var.address_line1 %>
+          <% if address_var.address_line2 %>
+            <br/>
+            <%= address_var.address_line2 %>
+          <% end %>
+        </td>
     </tr>
 
-    <tr>
-      <td>City</td>
-      <td><%= address_var.city %></td>
+    <tr <%= style_text %>>
+      <td <%= style_text %>>City</td>
+      <td <%= style_text %>><%= address_var.city %></td>
     </tr>
 
-    <tr>
-      <td>State</td>
-      <td><%= address_var.state %></td>
+    <tr <%= style_text %>>
+      <td <%= style_text %>>State</td>
+      <td <%= style_text %>><%= address_var.state %></td>
     </tr>
 
-    <tr>
-      <td>Zip</td>
-      <td><%= address_var.zipcode %></td>
+    <tr <%= style_text %>>
+      <td <%= style_text %>>Zip</td>
+      <td <%= style_text %>><%= address_var.zipcode %></td>
     </tr>
-  </table>    
+  </table>
 </div>

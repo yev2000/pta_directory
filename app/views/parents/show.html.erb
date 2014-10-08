@@ -1,2 +1,9 @@
-<%= render "parent_entry", parent_var: @parent %>
+<%= render "parents/parent_entry",
+      {
+        parent_var: @parent,
+        allow_add_contact_var: "allow",
+        allow_add_address_var: "allow",
+        warn_on_empty_var: "warn",
+      }
+ %>
 
