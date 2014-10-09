@@ -1,5 +1,5 @@
 class SchoolclassesController < ApplicationController
-  before_action :set_schoolclass, only: [:show, :edit, :update]
+  before_action :set_schoolclass, only: [:show, :edit, :update, :add_teachers, :add_students]
 
   def index
     @schoolclasses = Schoolclass.all.sort_by {|sc| sc.name}
@@ -39,16 +39,18 @@ class SchoolclassesController < ApplicationController
   end
 
 
-  def add_teacher
+  def add_teachers
     # we need to set up state so that we can provide
     # a picklist of teachers, and those teachers
     # can be assigned to the class identified in the params
+    # this is done in the before_action
   end
 
-  def add_student
+  def add_students
     # we need to set up state so that we can provide
     # a picklist of students, and those students
     # can be assigned to the class identified in the params
+    # this is done in the before_action
   end
 
   def set_teachers
@@ -60,7 +62,7 @@ class SchoolclassesController < ApplicationController
   private
 
   def schoolclass_params
-    params.require(:schoolclass).permit(:name)
+    params.require(:schoolclass).permit(:name, teacher_ids: [], student_ids: [])
   end
 
   def set_schoolclass

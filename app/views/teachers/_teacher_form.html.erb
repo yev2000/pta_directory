@@ -19,12 +19,14 @@
 
     <div class="control-group">
       <%= f.label :schoolclass_ids, "Classes Taught" %>
-      <%= f.collection_select(:schoolclass_ids, Schoolclass.all, :id, :name,
+      <%= f.collection_select(:schoolclass_ids, Schoolclass.all.sort_by{ |sc| sc.name }, :id, :name,
           {
             selected: @teacher.schoolclasses.map(&:id)
           },
           {
-            multiple: true
+            multiple: true,
+            style: "width: 400px;",
+            size: Schoolclass.all.size < 8 ? Schoolclass.all.size : 8
           }) %>
     </div>
 

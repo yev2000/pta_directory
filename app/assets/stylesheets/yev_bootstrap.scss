@@ -1,24 +1,40 @@
+/*a:link {
+    color: #99FFFF;
+}*/
+
+/* visited link */
+/* a:visited {
+    color: #99FFFF;
+}*/
+
+/* mouse over link */
+/* a:hover {
+    color: #99FFFF;
+} */
+
+/* selected link */
+/*a:active {
+    color: #99FFFF;
+}*/
+
+.table th, .table td {
+  border-top-color-value: rgba(56, 123, 69, 0.63);
+}
+
 div.well {
-  background-color: #FFFFCC;
-  padding: 9px;
-  border: 1px solid #CC9999;
-  box-shadow: 2px 2px 8px #666666;
+  background-color: #CCCCFF;
+  color: #003333;
+
+  padding: 15px;
+  border: 2px solid #9999FF;
+  box-shadow: 4px 4px 8px #3366FF;
 }
 
 body {
   font-family: "Titillium Web", "Calibri", Helvetica, Arial, sans-serif;
   font-size: 14px;
-  background-color: #FFCCCC;
+  color: white;
+  /* background-color: #003366; */
+  background-color: #006666;
 }
 
-div.positive_vote_box {
-  background-color: #CCFF99;
-}
-
-div.negative_vote_box {
-  background-color: #FF99FF;
-}
-
-div.neutral_vote_box {
-  background-color: #E6E6FA;
-}

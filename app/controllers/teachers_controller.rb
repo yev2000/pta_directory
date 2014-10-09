@@ -15,8 +15,7 @@ class TeachersController < ApplicationController
     if @teacher.save
       flash[:notice] = "Teacher #{@teacher.first_last} was created"
 
-      ### TODO: figure out where to redirect.  Some admin screen?
-      redirect_to root_path
+      redirect_to teacher_path(@teacher)
     else
       render :new
     end

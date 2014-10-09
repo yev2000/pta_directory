@@ -7,7 +7,7 @@ class Teacher < ActiveRecord::Base
   validates :lastname, presence: true
 
   def first_last
-    (firstname && (firstname.size > 0) ? firstname : "") + lastname
+    (firstname && (firstname.size > 0) ? firstname + " " : "") + lastname
   end
 
   def last_first

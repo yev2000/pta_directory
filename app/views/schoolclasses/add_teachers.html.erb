@@ -1,0 +1,21 @@
+<div class="well">
+
+  <%= form_for @schoolclass do |f| %>
+    <div class="control-group">
+      <%= f.label :teacher_ids, "Available Teachers" %>
+      <%= f.collection_select(:teacher_ids, Teacher.all.sort_by{ |t| t.last_first }, :id, :last_first,
+          {
+            selected: @schoolclass.teachers.map(&:id)
+          },
+          {
+            multiple: true,
+            style: "width: 400px;",
+            size: Teacher.all.size < 8 ? Teacher.all.size : 8
+          }) %>
+    </div>
+
+    <br/>
+    <%= f.submit "Set Teachers", class: "btn btn-primary" %>
+  <% end %>
+
+</div>

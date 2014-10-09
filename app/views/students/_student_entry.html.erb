@@ -2,24 +2,38 @@
 <% compact_var ||= "" %>
 <% name_method ||= :first_last %>
 
-<p>
-  <b><%= student_var.send(name_method) %></b>
-  <% if compact_var == "compact" %>
+<% if compact_var == "compact" %>
+  <p>
+    <b><%= student_var.send(name_method) %></b>
+
     <% if student_var.schoolclasses.size > 0 %>
       <small><em style="margin-left: 20px;"><%= "Enrolled in #{student_var.schoolclasses.size} #{'class'.pluralize(student_var.schoolclasses.size)}" %></em></small>
     <% end %>
-  <% end %>
-  <% if family_var.nil? %>
-    <!-- family_var being nil means that we are not listing the student in the -->
-    <!-- context of a family listing and therefore OK to show more editing controls -->
-    <%= link_to '<span class="pull-right"><i class="icon-pencil"></i> Edit</span>'.html_safe, edit_student_path(student_var), style: "margin-left: 20px; text-align: right;" %>
-    <%= link_to '<span class="pull-right"><i class="icon-home"></i> Family</span>'.html_safe, family_path(student_var.family), style: "margin-left: 5px;" %>
-  <% else %>
-    <%= link_to '<span class="pull-right"><i class="icon-user"></i> Details</span>'.html_safe, student_path(student_var), style: "margin-left: 20px;" %>
-  <% end %>
-</p>
 
-<% if compact_var != "compact" %>
+    <% if family_var.nil? %>
+      <!-- family_var being nil means that we are not listing the student in the -->
+      <!-- context of a family listing and therefore OK to show more editing controls -->
+      <%= icon_action_link("icon-pencil", "Edit", edit_student_path(student_var)) %>
+      <%= icon_action_link("icon-home", "Family", family_path(student_var.family)) %>
+    <% else %>
+      <%= icon_action_link("icon-user", "Details", student_path(student_var)) %>
+    <% end %>
+  </p>
+<% else %>
+  <div class="well">
+  <h4>
+    <%= student_var.send(name_method) %>
+    <% if family_var.nil? %>
+      <!-- family_var being nil means that we are not listing the student in the -->
+      <!-- context of a family listing and therefore OK to show more editing controls -->
+      <%= icon_action_link("icon-pencil", "Edit", edit_student_path(student_var)) %>
+      <%= icon_action_link("icon-home", "Family", family_path(student_var.family)) %>
+    <% else %>
+      <%= icon_action_link("icon-user", "Details", student_path(student_var)) %>
+    <% end %>
+  </h4>
+  <hr/>
+
   <% if student_var.parents.size > 0 %>
     <div style="margin-left: 40px;">
       <h5>Parents</h5>

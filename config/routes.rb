@@ -37,8 +37,8 @@ Rails.application.routes.draw do
 
   resources :schoolclasses, except: [:destroy] do
     member do
-      get "add_teacher"
-      get "add_student"
+      get "add_teachers"
+      get "add_students"
       post "set_teachers"
       post "set_students"
     end

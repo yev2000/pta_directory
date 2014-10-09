@@ -10,10 +10,10 @@
   <% if family_var.nil? %>
     <!-- family_var being nil means that we are not listing the parent in the -->
     <!-- context of a family listing and therefore OK to show more editing controls -->
-    <%= link_to '<span class="pull-right"><i class="icon-pencil"></i> Edit</span>'.html_safe, edit_parent_path(parent_var), style: "margin-left: 20px;" %>
-    <%= link_to '<span class="pull-right"><i class="icon-home"></i> Family</span>'.html_safe, family_path(parent_var.family), style: "margin-left: 5px;" %>
+    <%= icon_action_link("icon-pencil", "Edit", edit_parent_path(parent_var)) %>
+    <%= icon_action_link("icon-home", "Family", family_path(parent_var.family)) %>
   <% else %>
-    <%= link_to '<span class="pull-right"><i class="icon-user"></i> Details</span>'.html_safe, parent_path(parent_var), style: "margin-left: 20px;" %>
+    <%= icon_action_link("icon-user", "Details", parent_path(parent_var)) %>
   <% end %>
 </p>
 
@@ -31,7 +31,7 @@
           <tr>
             <td><%= contact.contact_type %></td>
             <td><%= contact.contact_data %></td>
-            <td><small><%= link_to '<span class="pull-right"><i class="icon-pencil"></i> Edit</span>'.html_safe, edit_contact_path(contact) %></small></td>
+            <td><%= icon_action_link("icon-pencil", "Edit", edit_contact_path(contact)) %></td>
           </tr>
         <% end %> <!-- contacts iteration -->
       </table>
@@ -54,7 +54,7 @@
   <!-- display address info -->
   <div style="margin-left: 40px;">
     <% if parent_var.address %>
-      <h5><em>Parent Address</em>&nbsp;&nbsp;<small><%= link_to '<span class="pull-right"><i class="icon-pencil"></i> Edit</span>'.html_safe, edit_address_path(parent_var.address) %></small></h5>
+      <h5><em>Parent Address</em><%= icon_action_link("icon-pencil", "Edit", edit_address_path(parent_var.address)) %></h5>
         <%= render "addresses/address_entry", {address_var: parent_var.address, size_var: "small"} %>
     <% else %>
       <% if warn_on_empty_var == "warn" %>

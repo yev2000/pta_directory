@@ -1,12 +1,3 @@
 <!-- Show details about the family -->
-
-<p class="pull-right">
-  <% if allow_object_edit?(@family) %>
-    [<%= link_to "Edit Family", edit_family_path(@family) %>]
-  <% end %>
-  
-  [<%= link_to "Back to all Families", families_path %>]
-</p>
-
 <%= render "families/family_entry", {family_var: @family, details_var: "details"} %>
 

@@ -3,14 +3,20 @@
 <% details_var ||= "none" %>
 
 <div class="well">
-  <h4><%= family_var.name %></h4>
-
+  <h3><%= family_var.name %>
   <% if details_var != "details" %>
+    </h3>
     <%= link_to family_path(family_var) do %>
       <i class="icon-book"></i>&nbsp;&nbsp;Details
     <% end %>
   <% else %>
-    <h5>Parents</h5>
+    <% if allow_object_edit?(family_var) %>
+      <%= icon_action_link("icon-pencil", "Edit", edit_family_path(family_var)) %>
+    <% end %>
+    
+    <%= icon_action_link("icon-book", "Families", families_path) %>
+    </h3>
+    <h4>Parents</h4>
 
     <div style="margin-left: 40px;">
       <%= render "parents/parents_list",
@@ -22,7 +28,7 @@
           } %>
     </div>
 
-    <h5>Students</h5>
+    <h4>Students</h4>
 
     <div style="margin-left: 40px;">
       <%= render "students/students_list",
@@ -35,7 +41,7 @@
     </div>
 
     <% if family_var.address %>
-      <h5>Family Address&nbsp;&nbsp;<small><%= link_to '<i class="icon-pencil"></i> Edit'.html_safe, edit_address_path(family_var.address) %></small></h5>
+      <h4>Family Address<%= icon_action_link("icon-pencil", "Edit", edit_address_path(family_var.address)) %></h4>
       <%= render "addresses/address_entry", {address_var: family_var.address} %>
     <% end %>
 

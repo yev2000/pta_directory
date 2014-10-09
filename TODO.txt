@@ -53,3 +53,4 @@ http://www.tutorialrepublic.com/twitter-bootstrap-2.3.2-tutorial/bootstrap-icons
 
 ------
 blog about has_many, through using ":uniq => true"
+blog about the options select knowledge for multiselect related to collections
