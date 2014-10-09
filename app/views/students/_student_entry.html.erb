@@ -13,11 +13,13 @@
     <% if family_var.nil? %>
       <!-- family_var being nil means that we are not listing the student in the -->
       <!-- context of a family listing and therefore OK to show more editing controls -->
-      <%= icon_action_link("icon-pencil", "Edit", edit_student_path(student_var)) %>
+      <% if allow_object_edit?(student_var) %>
+        <%= icon_action_link("icon-pencil", "Edit", edit_student_path(student_var)) %>
+      <% end %>
       <%= icon_action_link("icon-home", "Family", family_path(student_var.family)) %>
-    <% else %>
-      <%= icon_action_link("icon-user", "Details", student_path(student_var)) %>
     <% end %>
+    
+    <%= icon_action_link("icon-user", "Details", student_path(student_var)) %>
   </p>
 <% else %>
   <div class="well">
@@ -26,7 +28,9 @@
     <% if family_var.nil? %>
       <!-- family_var being nil means that we are not listing the student in the -->
       <!-- context of a family listing and therefore OK to show more editing controls -->
-      <%= icon_action_link("icon-pencil", "Edit", edit_student_path(student_var)) %>
+      <% if allow_object_edit?(student_var) %>
+        <%= icon_action_link("icon-pencil", "Edit", edit_student_path(student_var)) %>
+      <% end %>
       <%= icon_action_link("icon-home", "Family", family_path(student_var.family)) %>
     <% else %>
       <%= icon_action_link("icon-user", "Details", student_path(student_var)) %>

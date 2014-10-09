@@ -10,14 +10,18 @@
     <% end %>
 
     <%= icon_action_link("icon-user", "Details", teacher_path(teacher_var)) %>
-    <%= icon_action_link("icon-pencil", "Edit", edit_teacher_path(teacher_var)) %>
+    <% if allow_object_edit?(teacher_var) %>
+      <%= icon_action_link("icon-pencil", "Edit", edit_teacher_path(teacher_var)) %>
+    <% end %>
   </p>
 <% else %>
   <div class="well">
     <h4>
       <%= teacher_var.send(name_method) %>
       <%= icon_action_link("icon-book", "Teachers", teachers_path) %>
-      <%= icon_action_link("icon-pencil", "Edit", edit_teacher_path(teacher_var)) %>
+      <% if allow_object_edit?(teacher_var) %>
+        <%= icon_action_link("icon-pencil", "Edit", edit_teacher_path(teacher_var)) %>
+      <% end %>
 
     </h4>
     <hr/>

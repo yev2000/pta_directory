@@ -6,16 +6,18 @@
     <small><em style="margin-left: 20px;"><%= "With #{schoolclass_var.teachers.size} #{'teacher'.pluralize(schoolclass_var.teachers.size)} and #{schoolclass_var.students.size} #{'student'.pluralize(schoolclass_var.students.size)}" %></em></small>
 
     <%= icon_action_link("icon-user", "Details", schoolclass_path(schoolclass_var)) %>
-    <%= icon_action_link("icon-pencil", "Edit", edit_schoolclass_path(schoolclass_var)) %>
+    <% if allow_object_edit?(schoolclass_var) %>
+      <%= icon_action_link("icon-pencil", "Edit", edit_schoolclass_path(schoolclass_var)) %>
+    <% end %>
   </p>
 
 <% else %>
   <div class="well">
     <h4><%= schoolclass_var.name %>
-      <% if schoolclass_var.teachers.size > 0 %>
+      <% if schoolclass_var.teachers.size > 0 && allow_object_edit?(schoolclass_var) %>
         <%= icon_action_link("icon-pencil", "Specify Teachers", add_teachers_schoolclass_path(schoolclass_var)) %>
       <% end %>
-      <% if schoolclass_var.students.size > 0 %>
+      <% if schoolclass_var.students.size > 0 && allow_object_edit?(schoolclass_var) %>
         <%= icon_action_link("icon-pencil", "Specify Students", add_students_schoolclass_path(schoolclass_var)) %>
       <% end %>
     </h4>
@@ -30,7 +32,7 @@
         } %>
       <% else %>
         <p>No teachers have been defined for this class.</p>
-        <% if compact_var != "compact" %>
+        <% if compact_var != "compact" && allow_object_edit?(schoolclass_var) %>
           <%= link_to '<i class="icon-plus"></i>Add Teachers'.html_safe, add_teachers_schoolclass_path(schoolclass_var), class: "btn btn-small" %>
         <% end %>
       <% end %>
@@ -46,7 +48,7 @@
         } %>
       <% else %>
         <p>No students have been defined for this class.</p>
-        <% if compact_var != "compact" %>
+        <% if compact_var != "compact" && allow_object_edit?(schoolclass_var) %>
           <%= link_to '<i class="icon-plus"></i>Add Students'.html_safe, add_students_schoolclass_path(schoolclass_var), class: "btn btn-small" %>
         <% end %>
       <% end %>

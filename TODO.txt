@@ -15,15 +15,24 @@
   DONE
 
 * create "class" model
+  DONE
 * relate students to class
+  DONE
 * create teacher model
+  DONE
 * relate teacher to class
+  DONE
 
 * publish project to Heroku
+  DONE
+
+* User Management: design how user accounts/logins relate to models
+  * is a user associated with a parent?  a teacher?
+      concept of primary "owner" of an account?
+      each family has an "administrator" who can change settings for that family.  And delegate administrator ability to others(?)
 
 * "filtered" functionality on various index pages to allow filtering of long lists?
 * pagination of long lists like parents, families, teachers, students
-
 
 * implement restriction that contact info is only visible to users who have children in common with parents/teachers in the class.  So if you are user X and you have a child in classes A and B then you can only see contact info for parents with students also in classes A and B...
 
@@ -33,11 +42,6 @@
   Search for family
   Search for parent
 
-* User Management: design how user accounts/logins relate to models
-  * is a user associated with a parent?  a teacher?
-      concept of primary "owner" of an account?
-      each family has an "administrator" who can change settings for that family.  And delegate administrator ability to others(?)
-
 * Address: edit/new: validate address entry (zipcode must be a number)
 * Address: edit/new: selection of state must be via a popdown
 
@@ -45,12 +49,11 @@
 * events?
 * messages (that can be sent to families within class, to teachers)
 
-
-
 http://www.tutorialrepublic.com/twitter-bootstrap-2.3.2-tutorial/bootstrap-icons.php
+http://pta-directory.herokuapp.com/
 
 * Visual Cleanup (styling, make more stuff into tables; change fonts)
-
+  SOME PROGRESS
 ------
 blog about has_many, through using ":uniq => true"
 blog about the options select knowledge for multiselect related to collections

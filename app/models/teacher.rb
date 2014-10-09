@@ -14,4 +14,9 @@ class Teacher < ActiveRecord::Base
     lastname + (firstname && (firstname.size > 0) ? ", " + firstname : "")
   end
 
+  def get_administrator
+    # what user ID is allowed to administer (edit) this object
+    return nil  ## only admins are allowed to administer
+  end
+
 end

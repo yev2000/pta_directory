@@ -1,0 +1,17 @@
+<%= render "shared/content_title", title_var: "User Profile Info" %>
+
+<div class='well'>
+  <dl class='dl-horizontal'>
+    <dt>Username:</dt>
+    <dd><%= @user.username %></dd>
+    <dt>Email:</dt>
+    <dd><%= @user.email.blank? ? "None Set" : @user.email %></dd>
+    <dt>Role:</dt>
+    <dd><%= @user.role.blank? ? "None" : @user.role %></dd>
+  </dl>
+</div>
+
+<% if @user.families.size > 0 %>
+  <h5><%= "#{@user.username}'s Families" %></h5>
+  <%= render "families/family_list", family_list: @user.families %>
+<% end %>

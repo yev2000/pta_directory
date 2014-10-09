@@ -31,7 +31,7 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 
 ## ygurevich: added 10/6/2014
-gem 'bcrypt-ruby', '~> 3.0.1'
+gem 'bcrypt-ruby', '~> 3.1.2'
 
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc

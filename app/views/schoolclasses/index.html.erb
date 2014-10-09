@@ -1,7 +1,7 @@
 <%= render "schoolclasses/schoolclass_list",
     {
       schoolclass_list_var: @schoolclasses,
-      allow_add_class_var: "allow",
+      allow_add_class_var: (admin_logged_in?  ? "allow" : ""),
       warn_on_empty_var: "warn",
       compact_var: "compact"
     } %>

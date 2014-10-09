@@ -1,5 +1,6 @@
 class SchoolclassesController < ApplicationController
   before_action :set_schoolclass, only: [:show, :edit, :update, :add_teachers, :add_students]
+  before_action :require_creator_or_admin, only: [:new, :create, :edit, :update]
 
   def index
     @schoolclasses = Schoolclass.all.sort_by {|sc| sc.name}
@@ -73,5 +74,8 @@ class SchoolclassesController < ApplicationController
       redirect_to schoolclasses_path
     end
   end
-
+  
+  def require_creator_or_admin
+    access_denied(schoolclasses_path) unless allow_object_edit?(@schoolclass)
+  end
 end

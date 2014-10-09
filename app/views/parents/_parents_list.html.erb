@@ -13,12 +13,16 @@
     <% if warn_on_empty_var == "warn" && family_var %>
       <p>
         No parent information has been created yet.
-        Would you like to add parents to this family?  
+        <% if allow_add_parent_var == "allow" %>
+          Would you like to add parents to this family?  
+        <% else %>
+          <em class="quiet">You do not have permissions to modify parent information.</em>
+        <% end %>
       </p>
     <% end %>
   <% end %>
 
-  <% if allow_add_parent_var && family_var %>
+  <% if allow_add_parent_var == "allow" && family_var %>
     <%= link_to '<i class="icon-plus"></i>Add Parent'.html_safe, new_family_parent_path(family_var), class: "btn btn-small" %>
   <% end %>
 

@@ -5,76 +5,111 @@
 <% compact_var ||= "" %>
 <% name_method ||= :first_last %>
 
-<p>
-  <b><%= parent_var.send(name_method) %></b>
-  <% if family_var.nil? %>
-    <!-- family_var being nil means that we are not listing the parent in the -->
-    <!-- context of a family listing and therefore OK to show more editing controls -->
-    <%= icon_action_link("icon-pencil", "Edit", edit_parent_path(parent_var)) %>
-    <%= icon_action_link("icon-home", "Family", family_path(parent_var.family)) %>
-  <% else %>
-    <%= icon_action_link("icon-user", "Details", parent_path(parent_var)) %>
-  <% end %>
-</p>
-
-<% if compact_var != "compact" %>
-  <div style="margin-left: 40px;">
-    <% if parent_var.contacts.size > 0 %>
-      <table class="well table table-condensed">
-        <tr>
-          <th>Contact Type</th>
-          <th>Info</th>
-          <th>Actions</th>
-        </tr>
-
-        <% parent_var.contacts.each do |contact| %>
-          <tr>
-            <td><%= contact.contact_type %></td>
-            <td><%= contact.contact_data %></td>
-            <td><%= icon_action_link("icon-pencil", "Edit", edit_contact_path(contact)) %></td>
-          </tr>
-        <% end %> <!-- contacts iteration -->
-      </table>
-    <% else %>
-      <% if warn_on_empty_var == "warn" %>
-        <p>
-          No contact information has been created yet.
-          Would you like to add a contact to this parent?  
-        </p>
+<% if compact_var == "compact" %>
+  <p>
+    <b><%= parent_var.send(name_method) %></b>
+    <% if family_var.nil? %>
+      <!-- family_var being nil means that we are not listing the parent in the -->
+      <!-- context of a family listing and therefore OK to show more editing controls -->
+      <% if allow_object_edit?(parent_var) %>
+        <%= icon_action_link("icon-pencil", "Edit", edit_parent_path(parent_var)) %>
       <% end %>
-    <% end %> <!-- any contacts for the person -->
-
-    <% if allow_add_contact_var == "allow" %>
-      <%= link_to '<i class="icon-plus"></i>Add Contact'.html_safe, new_parent_contact_path(parent_var), class: "btn btn-small" %>
-    <% end %>
-  </div>
-
-  <hr/>
-
-  <!-- display address info -->
-  <div style="margin-left: 40px;">
-    <% if parent_var.address %>
-      <h5><em>Parent Address</em><%= icon_action_link("icon-pencil", "Edit", edit_address_path(parent_var.address)) %></h5>
-        <%= render "addresses/address_entry", {address_var: parent_var.address, size_var: "small"} %>
+      <%= icon_action_link("icon-home", "Family", family_path(parent_var.family)) %>
+      <%= icon_action_link("icon-user", "Details", parent_path(parent_var)) %>
     <% else %>
-      <% if warn_on_empty_var == "warn" %>
-        <% if parent_var.family.address.nil? %>
+      <%= icon_action_link("icon-user", "Details", parent_path(parent_var)) %>
+    <% end %>
+  </p>
+
+<% else %>
+  <% if family_var.nil? %>
+    <div class="well">
+  <% end %>
+    <h4><%= parent_var.send(name_method) %>
+    <% if family_var.nil? %>
+      <!-- family_var being nil means that we are not listing the parent in the -->
+      <!-- context of a family listing and therefore OK to show more editing controls -->
+      <% if allow_object_edit?(parent_var) %>
+        <%= icon_action_link("icon-pencil", "Edit", edit_parent_path(parent_var)) %>
+      <% end %>
+      <%= icon_action_link("icon-home", "Family", family_path(parent_var.family)) %>
+    <% else %>
+      <%= icon_action_link("icon-user", "Details", parent_path(parent_var)) %>
+    <% end %>
+    </h4>
+
+    <div style="margin-left: 40px;">
+      <% if parent_var.contacts.size > 0 %>
+        <table class="well table table-condensed">
+          <tr>
+            <th>Contact Type</th>
+            <th>Info</th>
+            <% if allow_object_edit?(parent_var) %>
+              <th>Actions</th>
+            <% end %>
+          </tr>
+
+          <% parent_var.contacts.each do |contact| %>
+            <tr>
+              <td><%= contact.contact_type %></td>
+              <td><%= contact.contact_data %></td>
+              <% if allow_object_edit?(parent_var) %>
+                <td><%= icon_action_link("icon-pencil", "Edit", edit_contact_path(contact)) %></td>
+              <% end %>
+            </tr>
+          <% end %> <!-- contacts iteration -->
+        </table>
+      <% else %>
+        <% if warn_on_empty_var == "warn" %>
           <p>
-            No address information has been created yet.
-            Would you like to add an address to this parent?  
-          </p>
-        <% else %>
-          <p>
-            No address information has been created yet,
-            however the Parent's family already has an address.
+            No contact information has been created yet.
+            <% if allow_object_edit?(parent_var) %>
+              Would you like to add a contact to this parent?  
+            <% else %>
+              <em class="quiet">You do not have permissions to modify contact information for this parent.</em>
+            <% end %>
           </p>
         <% end %>
-      <% end %>
+      <% end %> <!-- any contacts for the person -->
 
-      <!-- unlike contacts, we only have one address per parent -->
-      <% if allow_add_address_var == "allow" %>
-        <%= link_to '<i class="icon-plus"></i>Add Address'.html_safe, new_parent_address_path(parent_var), class: "btn btn-small" %>
+      <% if allow_add_contact_var == "allow" && allow_object_edit?(parent_var) %>
+        <%= link_to '<i class="icon-plus"></i>Add Contact'.html_safe, new_parent_contact_path(parent_var), class: "btn btn-small" %>
       <% end %>
-    <% end %>
-  </div>
+    </div>
+
+    <hr/>
+
+    <!-- display address info -->
+    <div style="margin-left: 40px;">
+      <% if parent_var.address  && allow_object_edit?(parent_var) %>
+        <h5><em>Parent Address</em><%= icon_action_link("icon-pencil", "Edit", edit_address_path(parent_var.address)) %></h5>
+          <%= render "addresses/address_entry", {address_var: parent_var.address, size_var: "small"} %>
+      <% else %>
+        <% if warn_on_empty_var == "warn" %>
+          <% if parent_var.family.address.nil? %>
+            <p>
+              No address information has been created yet.
+              <% if allow_object_edit?(parent_var) %>
+                Would you like to add an address to this parent?  
+              <% else %>
+                <em class="quiet">You do not have permissions to modify address information for this parent.</em>
+              <% end %>
+            </p>
+          <% else %>
+            <p>
+              No address information has been created yet,
+              however the Parent's family already has an address.
+            </p>
+          <% end %>
+        <% end %>
+
+        <!-- unlike contacts, we only have one address per parent -->
+        <% if allow_add_address_var == "allow" && allow_object_edit?(parent_var) %>
+          <%= link_to '<i class="icon-plus"></i>Add Address'.html_safe, new_parent_address_path(parent_var), class: "btn btn-small" %>
+        <% end %>
+      <% end %>
+    </div>
+  <% if family_var.nil? %>
+    </div>
+  <% end %>
 <% end %>

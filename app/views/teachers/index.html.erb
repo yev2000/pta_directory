@@ -3,5 +3,5 @@
       teacher_list_var: @teachers,
       name_method: :last_first,
       compact_var: "compact",
-      allow_add_var: "allow"
+      allow_add_var: (admin_logged_in?  ? "allow" : "")
     } %>

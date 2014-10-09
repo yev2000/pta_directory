@@ -46,6 +46,12 @@ Rails.application.routes.draw do
 
   resources :teachers, except: [:destroy]
 
+  resources :users, only: [:new, :show, :edit, :create, :update] do
+    collection do
+      get "admin_edit"
+    end
+  end
+  
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -1,5 +1,7 @@
 class FamiliesController < ApplicationController
   before_action :set_family, only: [:show, :edit, :update]
+  before_action :require_user, only: [:new, :create, :edit, :update]
+  before_action :require_creator_or_admin, only: [:edit, :update]
 
   def index
     @families = Family.all
@@ -12,8 +14,8 @@ class FamiliesController < ApplicationController
   def create
     @family = Family.new(family_params)
     
-    ## TODO: set the user ID of the family
-    ## @family.owner = current_user_get
+    # the user who creates the family is the one who is allowed to later edit it
+    @family.family_administrator = current_user_get
 
     if @family.save
       flash[:notice] = "Family #{@family.name} was created"
@@ -52,6 +54,10 @@ class FamiliesController < ApplicationController
       flash[:notice] = "There is no family with ID #{params[:id]}.  Showing all families instead."
       redirect_to families_path
     end
+  end
+
+  def require_creator_or_admin
+    access_denied(family_path(@family)) unless allow_object_edit?(@family)
   end
 
 end

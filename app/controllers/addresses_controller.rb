@@ -1,7 +1,8 @@
 class AddressesController < ApplicationController
   before_action :set_address, only: [:show, :edit, :update]
   before_action :set_addressable_for_address_creation, only: [:new, :create]
-
+  before_action :require_creator_or_admin, only: [:new, :create, :edit, :update]
+  
   def index
     @addresses = Address.all
   end
@@ -100,6 +101,11 @@ class AddressesController < ApplicationController
       redirect_to families_path
     end
   end
+
+  def require_creator_or_admin
+    access_denied(families_path) unless allow_object_edit?(@address.addressable)
+  end
+
 end
 
 

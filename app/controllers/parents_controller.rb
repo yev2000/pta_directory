@@ -1,6 +1,7 @@
 class ParentsController < ApplicationController
   before_action :set_parent, only: [:show, :edit, :update]
   before_action :set_family_for_parent_creation, only: [:new, :create]
+  before_action :require_creator_or_admin, only: [:new, :create, :edit, :update]
 
   def index
     @parents = Parent.all.sort_by {|p| p.lastname}
@@ -79,4 +80,9 @@ class ParentsController < ApplicationController
       redirect_to families_path
     end
   end
+
+  def require_creator_or_admin
+    access_denied(parents_path) unless allow_object_edit?(@parent)
+  end
+
 end

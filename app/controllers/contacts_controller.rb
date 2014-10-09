@@ -1,6 +1,7 @@
 class ContactsController < ApplicationController
   before_action :set_contact, only: [:show, :edit, :update]
   before_action :set_contactable_for_contact_creation, only: [:new, :create]
+  before_action :require_creator_or_admin, only: [:new, :create, :edit, :update]
 
   def index
     @contacts = Contact.all
@@ -99,6 +100,10 @@ class ContactsController < ApplicationController
       ### figure out if this is the right place to redirect
       redirect_to families_path
     end
+  end
+
+  def require_creator_or_admin
+    access_denied(families_path) unless allow_object_edit?(@contact.contactable)
   end
 end
 

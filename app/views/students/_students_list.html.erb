@@ -18,12 +18,16 @@
     <% if warn_on_empty_var == "warn" %>
       <p>
         No student information has been created yet.
-        Would you like to add students to this family?
+        <% if allow_add_student_var == "allow" %>
+          Would you like to add students to this family?
+        <% else %>
+          <em class="quiet">You do not have permissions to modify student information.</em>
+        <% end %>
       </p>
     <% end %>
   <% end %>  
 
-  <% if allow_add_student_var && family_var %>
+  <% if allow_add_student_var == "allow" && family_var %>
     <%= link_to '<i class="icon-plus"></i>Add Student'.html_safe, new_family_student_path(family_var), class: "btn btn-small" %>
   <% end %>
 
