@@ -83,7 +83,14 @@ class ParentsController < ApplicationController
   end
 
   def require_creator_or_admin
-    access_denied(parents_path) unless allow_object_edit?(@parent)
+    case
+    when @parent.nil? && @family.nil?
+      access_denied(parents_path)
+    when @parent.nil?
+      access_denied(parents_path) unless allow_object_edit?(@family)
+    else
+      access_denied(parents_path) unless allow_object_edit?(@parent)
+    end
   end
 
 end

@@ -6,10 +6,12 @@
 
 <div class="well">
 
-  <%= form_for [@student.family, @student] do |f| %>
-    <div class="control-group">
-      <%= f.label :firstname %>
-      <%= f.text_field :firstname %>
+  <%= form_for [@student.family, @student], html: { class: "form"} do |f| %>
+    <div class="row-fluid">
+      <div class="control-group">
+        <%= f.label :firstname %>
+        <%= f.text_field :firstname %>
+      </div>
     </div>
 
     <div class="control-group">
@@ -22,15 +24,18 @@
       <%= f.text_field :lastname %>
     </div>
 
-    <div class="control-group">
-      <%= f.label :schoolclass_ids, "Classes Attended" %>
-      <%= f.collection_select(:schoolclass_ids, Schoolclass.all, :id, :name,
-          {
-            selected: @student.schoolclasses.map(&:id)
-          },
-          {
-            multiple: true
-          }) %>
+    <div class="row-fluid">
+      <div class="control-group">
+        <%= f.label :schoolclass_ids, "Classes Attended" %>
+        <%= f.collection_select(:schoolclass_ids, Schoolclass.all, :id, :name,
+            {
+              selected: @student.schoolclasses.map(&:id)
+            },
+            {
+              multiple: true,
+              size: Schoolclass.all.size < 8 ? Schoolclass.all.size : 8
+            }) %>
+      </div>
     </div>
     <br/>
     <%= f.submit create_button_string, class: "btn btn-primary" %>

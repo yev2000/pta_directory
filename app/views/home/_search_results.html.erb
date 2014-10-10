@@ -1,46 +1,17 @@
 
 <div class="well">
-  <table>
-    <tr>
+  <table class="table table-condensed table-striped table-bordered" style="background-color: #CCFFFF;" >
+    <tr style="font-size: 18px;">
       <th>Record</th>
       <th>Type</th>
-      <th></th>
+      <th style="text-align: center;">Actions</th>
     </tr>
 
     <% search_results_list.each do |s| %>
       <tr>
-        <% case %>
-        <% when s.class == Family %>
-          <td><%= s.name %></td>
-          <td>Family</td>
-          <td><%= icon_action_link("icon-book", "Details", family_path(s)) %></td>
-
-          <%= render "families/family_entry", {family_var: s, compact_var: "compact"} if false %>
-        <% when s.class == Parent %>
-          <td><%= s.last_first %></td>
-          <td>Parent</td>
-          <td><%= icon_action_link("icon-user", "Details", parent_path(s)) %></td>
-
-          <%= render "parents/parent_entry", {parent_var: s, compact_var: "compact"} if false %>
-        <% when s.class == Student %>
-          <td><%= s.last_first %></td>
-          <td>Student</td>
-          <td><%= icon_action_link("icon-user", "Details", student_path(s)) %></td>
-          
-          <%= render "students/student_entry", {student_var: s, compact_var: "compact"} if false %>
-        <% when s.class == Teacher %>
-          <td><%= s.last_first %></td>
-          <td>Teacher</td>
-          <td><%= icon_action_link("icon-user", "Details", teacher_path(s)) %></td>
-
-          <%= render "teachers/teacher_entry", {teacher_var: s, compact_var: "compact"} if false %>
-        <% when s.class == Schoolclass %>
-          <td><%= s.name %></td>
-          <td>Class</td>
-          <td><%= icon_action_link("icon-list", "Details", schoolclass_path(s)) %></td>
-
-          <%= render "schoolclasses/schoolclass_entry", {schoolclass_var: s, compact_var: "compact"} if false %>
-        <% end %>
+        <td><%= s[0] %></td>
+        <td><%= s[1] %></td>
+        <td><%= s[2] %></td>
       </tr>
     <% end %>
   </table>

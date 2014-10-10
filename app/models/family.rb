@@ -14,18 +14,5 @@ class Family < ActiveRecord::Base
     self.family_administrator
   end
 
-#  def Family.search_for(search_term, do_recurse = false)
-#    normalized_search_term = normalize_search_term_for_SQL_search(search_term)
-#    retval = Family.where("name LIKE ?", normalized_search_term)
-#
-#    retval += Parent.search_for(search_term, do_recurse) if do_recurse
-#
-#    retval += Parent.search_for(search_term, do_recurse) if do_recurse
-#
-#    binding.pry
-#
-#    retval
-#  end
-
 end
 

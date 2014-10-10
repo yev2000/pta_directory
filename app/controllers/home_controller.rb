@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  before_action :require_user, except: [:index]
+  before_action :require_user, except: [:index, :developer]
 
   # this is here so that we can present some basic "about this application"
   # information about the PTA directory
@@ -28,8 +28,37 @@ class HomeController < ApplicationController
       # what we do is "fold" the results of addresses to match against the
       # addressable family or parent
       # and similarly contacts fold to teachers or parents
-      @search_results = fold_search_results_for_contacts_and_addresses(unfolded_search_results)
-    end 
+      folded_search_results = fold_search_results_for_contacts_and_addresses(unfolded_search_results)
+
+
+      # see if we can order the results somehow
+      @search_results = []
+      
+      folded_search_results.each do |s|
+        case
+        when s.class == Family
+          @search_results << [s.name, "Family", icon_action_link("icon-book", "Details", family_path(s))]
+        
+        when s.class == Parent
+          @search_results << [s.last_first, "Parent", icon_action_link("icon-user", "Details", parent_path(s))]
+        
+        when s.class == Student
+          @search_results << [s.last_first, "Student", icon_action_link("icon-user", "Details", student_path(s))]
+        
+        when s.class == Teacher
+          @search_results << [s.last_first, "Teacher", icon_action_link("icon-user", "Details", teacher_path(s))]
+
+        when s.class == Schoolclass
+          @search_results << [s.name, "Class", icon_action_link("icon-list", "Details", schoolclass_path(s))]
+        end
+
+        @search_results.sort! do |x,y|
+          retval = x[1] <=> y[1]
+          retval == 0 ? x[0] <=> y[0] : retval
+        end
+
+      end # iterate over folded search results
+    end # params specified a search
   end
 
   def developer

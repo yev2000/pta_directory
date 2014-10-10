@@ -104,7 +104,7 @@ class AddressesController < ApplicationController
   end
 
   def require_creator_or_admin
-    access_denied(families_path) unless allow_object_edit?(@address.addressable)
+    access_denied(families_path) unless allow_object_edit?(@addressable)
   end
 
 end
