@@ -104,7 +104,7 @@ class ContactsController < ApplicationController
   end
 
   def require_creator_or_admin
-    access_denied(families_path) unless allow_object_edit?(@contact.contactable)
+    access_denied(families_path) unless allow_object_edit?(@contactable)
   end
 end
 
