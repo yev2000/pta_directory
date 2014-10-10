@@ -1,0 +1,247 @@
+<h3>Background</h3>
+<div style="padding-left:20px;">
+I wanted to write about my experience in Ruby "metaprogramming" because I found it quite fun.  First some background to give you context:
+
+I've been working on an independent project as part of my coursework at <a href="http://gotealeaf.com">Tealeaf Academy</a>.  I decided to write a simple "class directory" application that can be used to track families who have students that attend a school.  So you can search for all students in a class and get contact information for their parents.  Or for a particular family, see who the parents are, what children they have, and what classes those children attend.
+
+The key classes in my application are
+<ul>
+<li><em><strong>Family</strong></em> - has many <em>Parent</em>s.  Has an <em>Address</em>.  Has many <em>Student</em>s.
+<li><em><strong>Parent</strong></em> - belongs to a <em>Family</em>.  Has an <em>Address</em> and multiple pieces of <em>Contact</em> information.
+<li><em><strong>Student</strong></em> - belongs to a <em>Family</em>.  Is associated with one or more <em>Schoolclass</em>es.
+<li><em><strong>Teacher</strong></em> - has multiple pieces of <em>Contact</em> information.  Is associated with one or more <em>Schoolclass</em>es.
+<li><em><strong>Contact</strong></em> - contact information (referenced by Parent and Teacher).
+<li><em><strong>Address</strong></em> - mailing address information (referenced by Parent and Family).
+
+</ul>
+
+Hence, a Schoolclass consists of many students and teachers (I could have simplified it so that there is only one teacher per class, but decided to make it more general).  Also I wanted to be able to associate an address both with a Family and a Parent in cases where students belonged to families where parents were not necessarily living together but the "family unit" for purposes of coordinating school activities and searches for "parents of a student" was an important concept.
+</div>
+
+<h3>A Search Requirement</h3>
+<div style="padding-left:20px;">
+I decided to implement an "open search" functionality in the app.  Basically to present a very simple search inteface to the end user - a single text search field - that would end up searching all of the key fields of all of my model instances (Families, Parents, Students, etc.) for matches and then return a list of matching records.  The returned set would be polymorphic in the sense that results would be instances of different classes - parents and teachers and schoolclasses would be in the same table of results.
+</div>
+
+<!--nextpage-->
+
+<h3>Straightforward Implementation</h3>
+<div style="padding-left:20px;">
+My first cut approach was pretty pedestrian.
+
+My various model classes (Parent, Student, Family, etc.) had field accessors for their model data (e.g., <code>firstname</code> and <code>lastname</code> for Parent, <code>name</code> for Family, <code>address</code>, <code>city</code>, and <code>state</code> for Address, a generic <code>contact_info</code> field for Contacts).
+
+So I simply created a "search_for" method in each of my model classes and implemented search within their specific fields (specific to each class, since each class had their unique set of fields that contained relevant textual information).  Note that unlike a normal method definition, I need to use the Classname.methodname notation.  Here is an example for Address:
+
+<pre>
+  def Address.search_for(search_string)
+    self.where("address_line1 LIKE ? OR address_line2 LIKE ? OR city LIKE ? or state LIKE ?",
+      <span style="background-color:#B0C4DE;">search_string, search_string, search_string, search_string</span>)
+  end
+</pre>
+
+Note that the highlighted repetition of the search_string is pretty ugly!  At first I though I'd be clever and use the special splat notation in Ruby to expand the number of times an argument is passed in to a method call by turning it into an array and using the * in front of it to denote that it be expanded to multiple arguments:
+<pre>
+  def Address.search_for(search_string)
+    self.where("address_line1 LIKE ? OR address_line2 LIKE ? OR city LIKE ? or state LIKE ?",
+      <span style="background-color:#B0C4DE;">*[search_string].*(4)</span>)
+  end
+</pre>
+
+I then read the following <a href="http://blogs.visoftinc.com/2012/07/30/activerecord-queries-drop-the-question-marks/">blog post</a> which pointed me to an even simpler solution of using variables:
+
+<pre>
+  def Address.search_for(search_string)
+    self.where("address_line1 LIKE :qstring OR address_line2 LIKE :qstring OR city LIKE :qstring or state LIKE :qstring", qstring: search_string)
+  end
+</pre>
+
+Ok, this is all well and good, but I did not like the solution for two reasons.
+</div>
+
+<h4>Problem #1: Repetitive calls to search_for</h4>
+<div style="padding-left:20px;">
+First my controller code which built up the search results was pretty repetitive by having to go through all of the classes to call search_for:
+<pre><code>
+    @search_results = []
+    @search_results += Address.search_for(search_string)
+    @search_results += Contact.search_for(search_string)
+    @search_results += Parent.search_for(search_string)
+    @search_results += Family.search_for(search_string)
+    @search_results += Teacher.search_for(search_string)
+    @search_results += Schoolclass.search_for(search_string)
+    @search_results += Student.search_for(search_string)
+</code></pre>
+
+This can be solved by introducing a little bit if metaprogramming.
+
+I created an array to hold all of the classes through which I wanted to search and then use the array inject method to build up the search results:
+
+<pre><code>
+  def search_all(search_string)
+    @search_results = []
+    search_classes = [Family, Parent, Student, Teacher, Schoolclass, Address, Contact]
+
+    @search_results = search_classes.inject([]) { |memo, searched_class| memo + searched_class.search_for(search_string) }
+  end
+</code></pre>
+
+Now that's satisfyingly compact and an example of some metaprogramming where I'm using the Classes as objects to call their search method.
+</div>
+
+<h4>Problem #2: Repetitive code in implementation of each class' search_for</h4>
+<div style="padding-left:20px;">
+However, the other unsatisfying thing was that I had relatively repretitive code in each of the individual classes to implement the search_for method.  Because each class has its own unique set of search fields.  I therefore ended up staring at very similar-looking code like:
+
+<pre><code>
+def Address.search_for(search_string)
+  self.where("address_line1 LIKE :qstring OR address_line2 LIKE :qstring OR city LIKE :qstring or state LIKE :qstring", 
+    qstring: search_string)
+end
+
+def Contact.search_for(search_string)
+  self.where("contact_data LIKE :qstring", qstring: search_string)
+end
+
+def Family.search_for(search_string)
+  self.where("name LIKE :qstring", qstring: search_string)
+end
+
+def Parent.search_for(search_string)
+  self.where("firstname LIKE :qstring OR lastname LIKE :qstring", qstring: search_string)
+end
+</code></pre>
+</div>
+<!--nextpage-->
+
+<h3>Metaprogramming to the rescue</h3>
+<div style="padding-left:20px;">
+So staring at all of that similar-looking code, I decided to dive deeper and implement a module which can be mixed-in to each of my classes and to dynamically determine all of the text fields of the model, build up the search query, and then execute it.
+
+I started with information in <a href="http://stackoverflow.com/questions/1289557/how-do-you-discover-model-attributes-in-rails">this StackOverflow article</a> and namely <a href="http://stackoverflow.com/a/1291395">this response</a> which detailed that the ActiveRecord provides a way to access all of the model's columns.
+
+So I could write code which would live (as a module) in each class so that the class iterates over all of its columns, determines which ones were text columns, and then builds up a query string.
+
+The code looks something like this:
+
+<pre><code>
+  # this builds up the query string
+  query_string = self.columns.inject("") do |memo,c|
+    if (c.type == :string)
+      if (memo == "")
+        memo + "#{c.name} LIKE :qstring"
+      else
+        memo + " OR #{c.name} LIKE :qstring"
+      end
+    else
+      memo
+    end
+  end
+
+  # this then issues the query
+  self.where(query_string, qstring: search_string)
+</code></pre>
+
+Note that I had to treat the first matching string column differently in order to start off the query string without the " OR " in it.
+Sweet!  Now I can simply put this code into a "Searchable" module and include that Searchable in all of my classes.  So each Parent/Student/Family/etc. class just has this:
+
+<pre><code>
+class Parent < ActiveRecord::Base
+  include Searchable
+</code></pre>
+
+and the Searchable looks like:
+
+<pre><code>
+module Searchable
+  extend ActiveSupport::Concern
+
+  module ClassMethods
+
+  def search_for(search_string)
+            
+      query_string = self.columns.inject("") do |memo,c|
+
+      etc. etc.
+
+</code></pre>
+</div>
+<!--nextpage-->
+
+<h4>Additional refinement: skip fields needed for polymorphic associations</h4>
+<div style="padding-left:20px;">
+There was one more change I wanted to make to tighten this up.  As written, my implementation would search through all of the string type columns.  This would include some columns I set up for polymorphic associations like "addressable_type" and "contactable_type" which exist to allow Families and Parents to have addresses, and Parents and Teachers to have contact information.
+
+So I simple wrote additional code to identify those columns (by name pattern) and skip over searching them:
+
+<pre><code>
+<span style="background-color:#B0C4DE;">
+  def of_able_form(column_name)
+    column_name.include? "able_type"
+  end
+</span>
+
+  def search_for(search_term)
+    query_string = self.columns.inject("") do |memo,c|
+      if ((c.type == :string) && <span style="background-color:#B0C4DE;">!of_able_form(c.name))</span>
+        if (memo == "")
+      etc. etc.
+</code></pre>
+
+As written, the code is a little fragile since it will omit columns which just happen to match this loose name pattern.  But for the purposes of my app, it's "good enough" - the odds of a "real" field ever having this name structure in the future are very slim.
+</div>
+
+<h4>Additional refinement: folding search results of subordinate classes</h4>
+<div style="padding-left:20px;">
+
+There is one more refinement which I performed which helped exercise some other Ruby knowledge.  As currently written, search "hits" would be recorded for low-level instances like addresses and contacts.  For the purposes of my app, it was sort of meaningless to show that a search hit a "contact" record because the record itself only contains the contact like "type" such as email or mobile or home phone, and "info" like the actual phone number or email address.  If I were to show that in search results, it would be sort of meaningless.  e.g.
+
+Search Results:
+<pre>
+Alan Turing                       Parent
+Turing Family                     Family
+Professor Turing                  Teacher
+someone@turing.org                Contact
+101 Turing Road, Green Hills, OK  Address
+</pre>
+
+So I decided to add logic which would consider any matches for a contact record or address as a match for the "-able" model instance that referenced it.  So that if an address was really associated with a family, then a hit on the address would be recorded as hit for the family.
+
+I needed to do this in a way which would remove duplicates.  So I decided to use Ruby sets, since sets have the nice property that when you add elements to them, duplicates are eliminated.
+
+The code looks like this:
+<pre><code>
+  def fold_search_results_for_contacts_and_addresses(search_results)
+    search_set = Set.new
+
+    search_results.each do |entry|
+      if (entry.class == Address)
+        search_set << entry.addressable
+      elsif (entry.class ==  Contact)
+        search_set << entry.contactable
+      else
+        search_set << entry
+      end
+    end
+
+    # return an array form of the set
+    search_set.to_a
+</code></pre>
+
+And it's called within my controller to get the final set of search results (note that params[:search] is what is submitted by the user in the search form.  This is the controller code that responds to that form submission):
+
+<pre><code>
+  search_classes = [Family, Parent, Student, Teacher, Schoolclass, Address, Contact]
+
+  unfolded_search_results = search_classes.inject([]) { |memo, directory_class| memo + directory_class.search_for(params[:search]) }
+
+  # we need to treat contacts and addresses as special.
+  # what we do is "fold" the results of addresses to match against the
+  # addressable family or parent
+  # and similarly contacts fold to teachers or parents
+  folded_search_results = fold_search_results_for_contacts_and_addresses(unfolded_search_results)
+</code></pre>
+
+That's it!  A nice adventure through metaprogramming and along the way I learned about the *-notation to pass a variable argument list to method calls, found out about a way to map query parameters in the ActiveRecord::where, got to use Sets, and of course metaprogamming.
+
+</div>

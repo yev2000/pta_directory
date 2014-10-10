@@ -1,5 +1,9 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
+  
+  DATABASE_OPERATOR = {
+  like_operator: 'ILIKE'
+  }
 
   # Code is not reloaded between requests.
   config.cache_classes = true

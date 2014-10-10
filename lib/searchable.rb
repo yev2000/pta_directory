@@ -23,21 +23,19 @@ module Searchable
     def search_for(search_term)
       normalized_search_term = normalize_search_term_for_SQL_search(search_term)
       
-      num_columns = 0
       query_string = self.columns.inject("") do |memo,c|
         if ((c.type == :string) && !of_able_form(c.name))
-          num_columns += 1
           if (memo == "")
-            memo + "#{c.name} LIKE ?"
+            memo + "#{c.name} #{DATABASE_OPERATOR[:like_operator]} :qstring"
           else
-            memo + " OR #{c.name} LIKE ?"
+            memo + " OR #{c.name} #{DATABASE_OPERATOR[:like_operator]} :qstring"
           end
         else
           memo
         end
       end
 
-      self.where(query_string, *[normalized_search_term].*(num_columns))
+      self.where(query_string, qstring: normalized_search_term)
     end
 
   end

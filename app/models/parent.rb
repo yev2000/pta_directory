@@ -22,5 +22,5 @@ class Parent < ActiveRecord::Base
     return self.family.get_administrator unless self.family.nil?
     return nil
   end
-
+  
 end

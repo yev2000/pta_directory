@@ -1,7 +1,8 @@
 class SchoolclassesController < ApplicationController
   before_action :set_schoolclass, only: [:show, :edit, :update, :add_teachers, :add_students]
   before_action :require_user
-  before_action :require_creator_or_admin, only: [:new, :create, :edit, :update]
+  before_action :require_admin, only: [:new,  :create]
+  before_action :require_creator_or_admin, only: [:edit, :update]
 
   def index
     @schoolclasses = Schoolclass.all.sort_by {|sc| sc.name}
@@ -79,4 +80,9 @@ class SchoolclassesController < ApplicationController
   def require_creator_or_admin
     access_denied(schoolclasses_path) unless allow_object_edit?(@schoolclass)
   end
+
+  def require_admin
+    access_denied(teachers_path) unless admin_logged_in?
+  end
+
 end

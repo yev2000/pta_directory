@@ -25,6 +25,9 @@ class UsersController < ApplicationController
   end
 
   def edit
+    # fix up the role in those cases where role is missing
+    # by default if role is empty, we will call that just the user role.
+    @user.role = @user.roles_hash[:user] if @user.role.nil? || @user.role.size < 1
   end
 
   def admin_edit
