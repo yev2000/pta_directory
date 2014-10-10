@@ -1,0 +1,38 @@
+<div class="container-fluid">
+
+  <h1>PTA Directory</h1>
+
+  <!-- Create some basic information about this app -->
+
+  <div class="row" style="padding-top: 60px;">
+    <img src="family2.jpg" class="img-responsive pull-left" alt="Responsive image" style="width:200px;height:200px;padding-right: 40px;"></img>
+    <h2 class="pull-right" style="padding-left: 40px;">For Parents</h2>
+    <p style="font-size: 24px;"> Create and manage your family including address and contact information for parents, and classes and siblings for your children. 
+    </p>
+    <ul style="font-size: 20px; padding-top: 40px;">
+      <li>View information on other families in your school and their contact information.</li>
+      <li>Parents, addresses, phone and email contacts</li>
+      <li>See your child's classes, with information on students in each class</li>
+    </ul>
+  </div>
+  <hr/>
+
+  <div class="row">
+    <img src="classroom1.jpg" class="img-responsive pull-left" alt="Responsive image" style="width:200px;height:200px;padding-right: 40px;"></img>
+    <h2 class="pull-right" style="padding-left: 40px;">For Teachers</h2>
+    <p style="font-size: 24px;"> Create and manage classes.</p>
+    <ul style="font-size: 20px; padding-top: 40px;">
+      <li>View information on your classes and students in your class.</li>
+      <li>Access contact information for students' parents.</li>
+    </ul>
+  </div>
+  <hr/>
+
+  <div class="row">
+    <%= link_to "Register", register_path, class: "btn btn-large", style: "font-size: 36px; margin-top: 40px; margin-left: 40px; padding-left: 20px; padding-top: 20px; padding-bottom: 20px; padding-right: 20px; " %>
+    <%= link_to "Sign In", login_path, class: "btn btn-success btn-large", style: "font-size: 36px; padding-left: 20px; padding-top: 20px; padding-bottom: 20px; padding-right: 20px; margin-top: 40px; margin-left: 40px;" %>
+
+    <%= link_to "For Tealeaf Students and TAs", developer_path, class: "btn btn-info btn-large", style: "font-size: 24px; padding-left: 20px; padding-top: 20px; padding-bottom: 20px; padding-right: 20px; margin-top: 40px; margin-left: 40px;" %>
+  </div>
+
+</div>

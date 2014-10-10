@@ -15,12 +15,24 @@ class ApplicationController < ActionController::Base
     session[:prior_url] = nil
   end
 
-  def redirect_to_original_action
+  def redirect_from_root_for_logged_in
+    # here we want to be smarter
+    # if the user is logging in and does not have
+    # any family defined, we can offer to help them
+    if (logged_in? && current_user_get.families.size == 0)
+      redirect_to freshuser_path 
+    else
+      redirect_to families_path
+    end
 
+  end
+
+
+  def redirect_to_original_action
     if session[:prior_url]
       redirect_to session[:prior_url]
     else
-      redirect_to root_path
+      redirect_from_root_for_logged_in
     end
   end
 

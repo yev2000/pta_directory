@@ -4,7 +4,7 @@
 
 <div class="well">
 
-	<%= form_tag("/login", class: "well form-inline") do %>
+	<%= form_tag("/login", class: "form-inline") do %>
 		<div class="control-group">
 			<div class="row">
 				<div class="span1">
@@ -26,7 +26,12 @@
 			</div>
 		</div>
 
-		<%= submit_tag("Login",	class: "btn btn-success") %>
+		<%= submit_tag("Login",	class: "btn btn-success btn-large", style: "margin-top: 40px;") %>
 	<% end %>
+
+	<div class="well">
+		<p> Don't have an account?  Register!</p>
+		<%= link_to "Register", register_path, class: "btn btn-large" %>
+	</div>
 
 </div>

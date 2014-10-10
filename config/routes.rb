@@ -1,11 +1,15 @@
 Rails.application.routes.draw do
-  root to: 'families#index'
+  root to: 'home#index'
 
   get '/register', to: 'users#new'
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   get '/logout', to: 'sessions#destroy'
-
+  get '/freshuser', to: 'home#freshuser'
+  get '/developer', to: 'home#developer'
+  get '/search', to: 'home#search'
+  get '/administer_families', to: 'home#administer_families'
+  
   resources :families, except: [:destroy] do
     resources :parents, only: [:new, :create, :edit, :update]
     resources :students, only: [:new, :create, :edit, :update]
@@ -51,7 +55,7 @@ Rails.application.routes.draw do
       get "admin_edit"
     end
   end
-  
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

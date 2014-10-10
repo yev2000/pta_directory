@@ -1,0 +1,43 @@
+<%= render "shared/content_title", title_var: "Open Search in PTA Directory" %>
+
+<!-- Create a search form where you can type in any string and -->
+<!-- we will search among all of the items of data for it -->
+<%= form_tag(search_path, :method => "get", class: "well") do %>
+  <div class="control-group">
+    <div class="row">
+      <div class="span2">
+        <%= label_tag(:search, "Search For:", style: "color: black;") %>
+      </div>
+      <!-- adding support for placeholder text in the field rather than -->
+      <!-- explicitly setting field contents -->
+      <!-- very strange behavior!  The focus seems only set the second time the page is visited!!! -->
+      <div class="span4">
+        <% if params[:search] %>
+          <%= text_field_tag(:search, params[:search], {autofocus: "autofocus", style: "width: 50em"}) %>
+        <% else %>
+          <%= text_field_tag(:search, nil, {placeholder: "<Any string in families, teachers, etc.>", autofocus: "autofocus", style: "width: 50em"}) %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <br>
+  <%= submit_tag("Search", style: "btn btn-primary") %>
+<% end %>
+
+<!-- we may already have search results, so display them here -->
+<hr/>
+
+<% if (params[:search] && (params[:search].size > 0)) %>
+  <!-- this is a hint that a search has occurred -->
+  <!-- now we have to figure out whether any results matched our query -->
+  <% if @search_results.size == 0 %>
+    <!-- no results match, so give feedback that we DID do a search but nothing was found -->
+    <h4>Nothing matches your search criteria</h4>
+  <% else %>
+    <h4><%= "#{@search_results.size} " + "entry".pluralize(@search_results.size) + " found." %></h4>
+
+    <%= render "home/search_results", search_results_list: @search_results %>
+  <% end %>
+
+<% end %>

@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-
   before_action :set_user, only: [:edit, :show, :update]
   before_action :require_logged_in_user_or_superadmin, only: [:edit, :update, :admin_edit]
   

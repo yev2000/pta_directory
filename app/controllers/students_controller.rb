@@ -1,5 +1,6 @@
 class StudentsController < ApplicationController
   before_action :set_student, only: [:show, :edit, :update]
+  before_action :require_user
   before_action :set_family_for_student_creation, only: [:new, :create]
 
   def index

@@ -1,0 +1,46 @@
+<h2>Up and Running with PTA Directory</h2>
+
+<div class="well">
+  <h3>Getting Started is Easy:</h3>
+
+  <div class="well">
+    <ul>
+      <li style="font-size: 24px; padding-bottom: 8px;">Create your own Family record</li>
+      <ul style="font-size: 20px; padding-bottom: 8px;">
+        <li style="padding-bottom: 4px;">Click on the "Create New Family" button in the navigation bar</li>
+        <li style="padding-bottom: 4px;">You will be asked to enter a family name</li>
+        <li style="padding-bottom: 4px;">You can then create information on the parents in this family, including their contact information.</li>
+          <ul><li style="padding-bottom: 4px;">You can specify a family address for the entire family, or separate addresses for each parent if they are not living together.</li></ul>
+        <li style="padding-bottom: 4px;">Then add information about the students in this family: their names and the classes they attend.</li>
+      </ul>
+
+      <li style="font-size: 24px; padding-bottom: 8px;">Browser Data</li>
+      <ul style="font-size: 20px; padding-bottom: 8px;">
+        <li style="padding-bottom: 4px;">Click on the Family Directory in the navigation bar to get a listing of all families</li>
+        <li style="padding-bottom: 4px;">Click on the Directory Listings button to get access to lists of</li>
+        <ul>
+          <li style="padding-bottom: 4px;">Parents</li>
+          <li style="padding-bottom: 4px;">Students</li>
+          <li style="padding-bottom: 4px;">Classes</li>
+          <li style="padding-bottom: 4px;">Teachers</li>
+        </ul>
+        <li style="padding-bottom: 4px;">Navigation is easy: class listings link to individual students, student records lead to parents and families, etc.</li>
+      </ul>
+      <li style="font-size: 24px; padding-bottom: 8px;">Search All Data</li>
+    </ul>
+  </div>
+
+  <div class="well">
+    <h3>What do you want to do?</h3>
+    <% if current_user_get && current_user_get.families.size == 0 %>
+      <%= link_to "Create a Family Record", new_family_path, class: "btn btn-primary btn-large", style: "font-size: 36px; margin-top: 20px; margin-left: 40px; padding-left: 20px; padding-top: 20px; padding-bottom: 20px; padding-right: 20px; " %>
+    <% else %>
+      <%= link_to "View Your #{"Family".pluralize(current_user_get.families.size)}", administer_families_path, class: "btn btn-primary btn-large", style: "font-size: 36px; margin-top: 20px; margin-left: 40px; padding-left: 20px; padding-top: 20px; padding-bottom: 20px; padding-right: 20px; " %>
+    <% end %>
+    <%= link_to "Search", search_path, class: "btn btn-info btn-large", style: "font-size: 36px; padding-left: 20px; padding-top: 20px; padding-bottom: 20px; padding-right: 20px; margin-top: 20px; margin-left: 40px;" %>
+  </div>
+  <div class="well">
+    <%= link_to "For Tealeaf Students and TAs", developer_path, class: "btn btn-info btn-large", style: "font-size: 20px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; padding-right: 10px; margin-top: 10px; margin-left: 10px;" %>
+
+  </div>
+</div>

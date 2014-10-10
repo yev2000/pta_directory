@@ -5,7 +5,7 @@
     <b><%= schoolclass_var.name %></b>
     <small><em style="margin-left: 20px;"><%= "With #{schoolclass_var.teachers.size} #{'teacher'.pluralize(schoolclass_var.teachers.size)} and #{schoolclass_var.students.size} #{'student'.pluralize(schoolclass_var.students.size)}" %></em></small>
 
-    <%= icon_action_link("icon-user", "Details", schoolclass_path(schoolclass_var)) %>
+    <%= icon_action_link("icon-list", "Details", schoolclass_path(schoolclass_var)) %>
     <% if allow_object_edit?(schoolclass_var) %>
       <%= icon_action_link("icon-pencil", "Edit", edit_schoolclass_path(schoolclass_var)) %>
     <% end %>

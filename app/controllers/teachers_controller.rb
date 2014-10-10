@@ -1,5 +1,6 @@
 class TeachersController < ApplicationController
   before_action :set_teacher, only: [:show, :edit, :update]
+  before_action :require_user
   before_action :require_creator_or_admin, only: [:new, :create, :edit, :update]
 
   def index

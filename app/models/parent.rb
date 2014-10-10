@@ -1,4 +1,6 @@
 class Parent < ActiveRecord::Base
+  include Searchable
+
   has_one     :address, as: :addressable
   has_many    :contacts, as: :contactable
   belongs_to  :family

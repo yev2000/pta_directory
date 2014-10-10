@@ -1,6 +1,6 @@
 class FamiliesController < ApplicationController
   before_action :set_family, only: [:show, :edit, :update]
-  before_action :require_user, only: [:new, :create, :edit, :update]
+  before_action :require_user
   before_action :require_creator_or_admin, only: [:edit, :update]
 
   def index

@@ -1,6 +1,7 @@
 class AddressesController < ApplicationController
   before_action :set_address, only: [:show, :edit, :update]
   before_action :set_addressable_for_address_creation, only: [:new, :create]
+  before_action :require_user
   before_action :require_creator_or_admin, only: [:new, :create, :edit, :update]
   
   def index

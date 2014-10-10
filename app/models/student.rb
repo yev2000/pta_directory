@@ -1,4 +1,6 @@
 class Student < ActiveRecord::Base
+  include Searchable
+  
   has_many    :contacts, as: :contactable
   belongs_to  :family
   has_many    :parents, through: :family

@@ -1,47 +1,43 @@
 <ul class="nav">
   <li>
-    <%= link_to "Family Directory", root_path, :class => 'brand' %>
+    <%= link_to "Family Directory", families_path, :class => 'brand' %>
   </li>
 </ul>
 
-<div class="btn-group nav_item">
-  <%= link_to "Create New Family", new_family_path, class: "btn btn-success btn-small" %>
-</div>
-
-<div class="btn-group nav_item">
-	<%= link_to "#", class: "btn btn-small dropdown-toggle", "data-toggle" => "dropdown" do %>
-	Directory Listings <span class="caret"></span>
-	<% end %>
-	<ul class="dropdown-menu">
-		<% menulist = [
-				["Parent Directory", parents_path],
-				["Student Directory", students_path],
-				["Teacher Directory", teachers_path],
-				["Classes Directory", schoolclasses_path]
-				] %>
-
-		<% menulist.each do |ml| %>
-			<li>
-				<%= link_to ml[0], ml[1] %>
-			</li>
-		<% end %>
-<% if false %>
-		<% if admin_logged_in? %>
-			<li class="divider"></li>
-			<li>
-				<%= link_to(new_category_path) do %>
-					<i class="icon-plus"></i>
-					New Category
-				<% end %>
-			</li>
-		<% end %> <!-- admin logged in -->
-<% end %> <!-- if false -->
-	</ul>
-</div>
-
 <% if logged_in? %>
 	<div class="btn-group nav_item">
-		<%= link_to "#", class: "btn btn-small dropdown-toggle", "data-toggle" => "dropdown" do %>
+	  <%= link_to "Create New Family", new_family_path, class: "btn btn-success btn-small", style: "padding-bottom: 6px;" %>
+	</div>
+
+	<div class="btn-group nav_item">
+		<%= link_to "#", class: "btn btn-small dropdown-toggle", "data-toggle" => "dropdown", style: "padding-bottom: 6px;" do %>
+		Directory Listings <span class="caret"></span>
+		<% end %>
+		<ul class="dropdown-menu">
+			<% menulist = [
+					["Parent Directory", parents_path],
+					["Student Directory", students_path],
+					["Teacher Directory", teachers_path],
+					["Classes Directory", schoolclasses_path]
+					] %>
+
+			<% menulist.each do |ml| %>
+				<li>
+					<%= link_to ml[0], ml[1] %>
+				</li>
+			<% end %>
+		</ul>
+	</div>
+	
+	<div class="btn-group nav_item">
+	  <%= link_to(search_path) do %>
+	  	<span class="btn btn-primary"><i class="icon-search" style="padding-right: 4px;"></i>
+	  	Search</span>
+  	<% end %>
+  </div>
+
+	<div class="btn-group nav_item">
+		<%= link_to "#", class: "btn btn-small dropdown-toggle", "data-toggle" => "dropdown", style: "padding-bottom: 6px;" do %>
 			<%= ("&nbsp;" + current_user_get.username + "&nbsp;&nbsp;").html_safe %><span class="caret"></span>
 		<% end %>
 
@@ -66,14 +62,16 @@
 			</li>
 		</ul>
 	</div>
-<% else %>
-	<div class="nav_item">
-  	<%= link_to "Register", register_path, class: "btn btn-small" %>
-	</div>
-	<div class="nav_item">
-  	<%= link_to "Sign In", login_path, class: "btn btn-success btn-small" %>
-	</div>
+
+	<div class="btn-group nav_item">
+	  <%= link_to(freshuser_path) do %>
+	  	<span class="btn btn-info"><i class="icon-question-sign" style="padding-right: 4px;"></i>
+	  	Help</span>
+  	<% end %>
+  </div>
+
 <% end %>
+
 
 
 <% if false %>

@@ -5,10 +5,7 @@
 <div class="well">
   <h3><%= family_var.name %>
   <% if details_var != "details" %>
-    </h3>
-    <%= link_to family_path(family_var) do %>
-      <i class="icon-book"></i>&nbsp;&nbsp;Details
-    <% end %>
+    <%= icon_action_link("icon-book", "Details", family_path(family_var)) %></h3>
   <% else %>
     <% if allow_object_edit?(family_var) %>
       <%= icon_action_link("icon-pencil", "Edit", edit_family_path(family_var)) %>

@@ -1,4 +1,6 @@
 class Teacher < ActiveRecord::Base
+  include Searchable
+
   has_many    :schoolclass_teachers
   has_many    :schoolclasses, through: :schoolclass_teachers
   has_many    :students, -> { uniq }, through: :schoolclasses

@@ -1,0 +1,42 @@
+<div class="well span8">
+  <p>
+    Basic business rules to help you navigate the application:
+
+    4 Key models:
+  </p>
+
+  <ul>
+    <li style="font-size: 18px; padding-bottom: 4px;">Families</li>
+    <li style="font-size: 18px; padding-bottom: 4px;">Parents</li>
+    <li style="font-size: 18px; padding-bottom: 4px;">Students</li>
+    <li style="font-size: 18px; padding-bottom: 4px;">Teachers</li>
+  </ul>
+
+  <ul>
+    <li style="font-size: 18px; padding-bottom: 8px;"><em><strong>Families</strong></em> contain multiple Parents (1:M), an optional address (1:1), and multiple Students (1:M).  A family belongs to a <em><strong>User</strong></em>.  Only the user to who the family belongs (or an admin or superadmin) can edit information for the family (including the parents and students within the family).</li>
+
+    <li style="font-size: 18px; padding-bottom: 8px;"><em><strong>Parents</strong></em> belong to families(M:1) and contain an optional address (1:1), and multiple pieces of contact information (1:M)
+    <li style="font-size: 18px; padding-bottom: 8px;"><em><strong>Students</strong></em> belong to families (M:1) and classes (M:M).</li>
+    <li style="font-size: 18px; padding-bottom: 8px;"><em><strong>Teachers</strong></em> can contain multiple pieces of contact information, and belong to Classes (M:M association).  Only an Admin or Superadmin user can edit Teacher records.</li>
+  </ul>
+
+  3 Subordinate models
+  <ul>
+    <li style="font-size: 18px; padding-bottom: 8px;">
+      <em><strong>Classes</strong></em> (model is called Schoolclasses to avoid the reserved word class) form M:M association between students and teachers.  Only an Admin or Superadmin user can create Class records, although any user can add/remove students from a particular class for the families that the user manages.
+    </li>
+    <li style="font-size: 18px; padding-bottom: 8px;">
+      <em><strong>Addresses</strong></em> are polymorphic associations that can belong to Families or Parents.
+    </li>
+    <li style="font-size: 18px; padding-bottom: 8px;">
+      <em><strong>Contacts</strong></em> are polymorphic associations that can belong to Parents and Teachers.
+    </li>
+  </ul>
+
+  <p>Only registered users have access to the contents of the app.</p>
+
+  <p>Registered users can search (but not edit) all data including Families, Parents, Students, teachers.</p>
+
+  <p>Every family has an "family_administator" user (the user who created the family record) who can edit any of the information in the "tree" of the family data (the family itself, family address, parents beloning to the family, students belonging to the family, and contact and address information for the parents)</p>
+
+</div>
