@@ -8,7 +8,7 @@
 			<div class="control-group">
 				<%= label_tag(:uname, "Switch to user:") %>
 				<% edituser = User.find_by(slug: params[:id]) %>
-				<%= select_tag(:id, options_for_select(User.all.map { |u| u.slug}, edituser ? edituser.username : nil)) %>
+				<%= select_tag(:id, options_for_select(User.all.map { |u| u.slug}, edituser ? edituser.slug : nil)) %>
 			</div>
 
 			<br>
