@@ -34,7 +34,7 @@ class UsersController < ApplicationController
     user = User.find_by(slug: params[:id])
     if (user.nil?)
       flash[:notice] = "No user for #{params[:id]} was found."
-      redirect_to root_path
+      redirect_to edit_user_path(current_user_get)
     else
       redirect_to edit_user_path(user)
     end
