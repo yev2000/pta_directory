@@ -33,6 +33,9 @@ gem 'jbuilder', '~> 2.0'
 ## ygurevich: added 10/6/2014
 gem 'bcrypt-ruby', '~> 3.1.2'
 
+## ygurevich: added 10/11/2014 as part of learning up on HAML
+gem "haml"
+
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc
 

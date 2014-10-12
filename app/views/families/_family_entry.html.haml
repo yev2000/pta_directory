@@ -1,0 +1,55 @@
+/ we show a block of information about the family
+
+- details_var ||= "none"
+
+.well
+  - if details_var != "details"
+    / this means that we're NOT in the details page and therefore can show the details link
+    %h3
+      = family_var.name
+      = icon_action_link("icon-book", "Details", family_path(family_var))
+
+  - else
+    / here we know we are on the details page (show page) and therefore can show links back to families and editing
+    %h3
+      = family_var.name
+      - if allow_object_edit?(family_var)
+        = icon_action_link("icon-pencil", "Edit", edit_family_path(family_var))
+      = icon_action_link("icon-book", "Families", families_path)
+    
+    %h4
+      Parents
+
+    %div{style: "margin-left: 40px"}
+      = render "parents/parents_list",
+          { parent_list_var: family_var.parents,
+          allow_add_parent_var: allow_object_edit?(family_var) ? "allow" : "",
+          warn_on_empty_var: "warn",
+          family_var: family_var }
+    %h4
+      Students
+
+    %div{style: "margin-left: 40px"}
+      = render "students/students_list",
+          {student_list_var: family_var.students,
+          allow_add_student_var: allow_object_edit?(family_var) ? "allow" : "",
+          warn_on_empty_var: "warn",
+          family_var: family_var}
+
+    - if family_var.address
+      %h4
+        Family Address
+      - if allow_object_edit?(family_var)
+        = icon_action_link("icon-pencil", "Edit", edit_address_path(family_var.address))
+
+      = render "addresses/address_entry", {address_var: family_var.address}
+    - else
+      %p
+        No family address has been created yet.
+
+        - if family_var.parents && family_var.parents.detect {|p| p.address != nil }
+          However, at least one parent in the family has an address defined.
+
+      - if allow_object_edit?(family_var)
+        %div{style: "margin-left: 40px"}
+        = link_to '<i class="icon-plus"></i>Add Address'.html_safe, new_family_address_path(family_var), class: "btn btn-small"

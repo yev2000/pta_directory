@@ -1,0 +1,22 @@
+= render "shared/content_title", {title_var: title_var}
+
+- pure_contact_var ||= "none"
+
+- create_button_string = @contact.new_record? ? "Create Contact Record" : "Update Contact Record"
+
+= render "shared/errors_display", errors_set: @contact.errors
+
+.well
+  - form_input = nil
+  - pure_contact_var == "pure" ? form_input = @contact : form_input = [@contact.contactable, @contact]
+  = form_for form_input do |f|
+    .control-group
+      = f.label :contact_type
+      = f.select(:contact_type, ['Mobile Phone', 'Home Phone', 'Work Phone', 'Personal Email', 'Work Email', 'Other'])
+
+    .control-group
+      = f.label :contact_data
+      = f.text_field :contact_data
+
+    <br/>
+    = f.submit create_button_string, class: "btn btn-primary"

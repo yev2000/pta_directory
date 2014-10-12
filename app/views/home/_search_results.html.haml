@@ -1,0 +1,15 @@
+%div
+  %table{class: "table table-condensed table-striped table-bordered", style: "background-color: #CCFFFF"}
+    %tr{style: "font-size: 18px"}
+      %th
+        Record
+      %th
+        Type
+      %th{style: "text-align: center"}
+        Actions
+
+    - search_results_list.each do |s|
+      %tr
+        %td= s[0]
+        %td= s[1]
+        %td= s[2]

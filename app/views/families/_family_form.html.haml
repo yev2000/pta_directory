@@ -1,0 +1,14 @@
+= render "shared/content_title", {title_var: title_var}
+
+- create_button_string = @family.new_record? ? "Create Family Record" : "Update Family Record"
+
+= render "shared/errors_display", errors_set: @family.errors
+
+.well
+  = form_for @family do |f|
+    .control-group
+      = f.label :name
+      = f.text_field :name
+    
+    <br/>
+    = f.submit create_button_string, class: "btn btn-primary"

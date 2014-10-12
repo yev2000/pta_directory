@@ -1,6 +1,7 @@
 class AddressesController < ApplicationController
   before_action :set_address, only: [:show, :edit, :update]
   before_action :set_addressable_for_address_creation, only: [:new, :create]
+  before_action :set_addressable_for_address_editing, only: [:edit, :update]
   before_action :require_user
   before_action :require_creator_or_admin, only: [:new, :create, :edit, :update]
   
@@ -101,6 +102,10 @@ class AddressesController < ApplicationController
       ### figure out if this is the right place to redirect
       redirect_to families_path
     end
+  end
+
+  def set_addressable_for_address_editing
+    @addressable = @address.addressable unless @address.nil?
   end
 
   def require_creator_or_admin

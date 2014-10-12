@@ -1,0 +1,11 @@
+/ determines how the list is to be sorted
+- sorting_var ||= :implicit
+- if family_list
+  - if sorting_var == :implicit
+    - sorted_list = family_list.sort_by{|x| x.name}
+  - else
+    - sorted_list = post_list
+
+  .well
+    - sorted_list.each do |f|
+      = render "families/family_entry", {family_var: f}

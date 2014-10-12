@@ -1,0 +1,32 @@
+- size_var ||= "normal"
+
+- if size_var == "small"
+  - style_text = "font-size: 10px; line-height: 11px"
+- else
+  - style_text = ""
+
+%div{style: "margin-left: 40px"}
+  %table{class: "well table table-condensed"}
+    %tr{style: style_text}
+      %td{style: style_text}
+        %em Street Address
+      %td{style: style_text}
+        = address_var.address_line1
+        - if address_var.address_line2
+          <br/>
+          = address_var.address_line2
+    %tr{style: style_text}
+      %td{style: style_text}
+        City
+      %td{style: style_text}
+        = address_var.city
+    %tr{style: style_text}
+      %td{style: style_text}
+        State
+      %td{style: style_text}
+        = address_var.state
+    %tr{style: style_text}
+      %td{style: style_text}
+        Zip
+      %td{style: style_text}
+        = address_var.zipcode
